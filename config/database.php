@@ -132,6 +132,9 @@ return [
             'password' => env('REDIS_PASSWORD', null),
             'port' => env('REDIS_PORT', 6379),
             'database' => env('REDIS_DB', 0),
+            'options' => [
+                'prefix' => 'lh4:',
+            ],
         ],
 
         'cache' => [
@@ -140,6 +143,9 @@ return [
             'password' => env('REDIS_PASSWORD', null),
             'port' => env('REDIS_PORT', 6379),
             'database' => env('REDIS_CACHE_DB', 1),
+            'options' => [
+                'prefix' => 'lh4:',
+            ],
         ],
 
     ],
