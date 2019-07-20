@@ -80,7 +80,7 @@ class Game extends Model
         return $this->status_id === GameStatus::MATCHING;
     }
 
-    public function hasPlayer(int $id)
+    public function isPlayer(int $id)
     {
         return $this->player_one_id === $id
             || $this->player_two_id === $id;
