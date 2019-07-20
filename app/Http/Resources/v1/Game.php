@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources\v1;
 
-use App\Game;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PlayerTwoGame extends JsonResource
+class Game extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,14 +17,14 @@ class PlayerTwoGame extends JsonResource
         return $this->format($this->resource);
     }
 
-    private function format(Game $game)
+    public function format(Game $game)
     {
         return [
-            'id' => encrypt($game->id),
-            'current_player' => $game->current_player,
-            'people' => $game->people,
-            'player_two_state' => $game->player_two_state,
-            'player_two_person' => $game->player_two_person,
+            'id' => $game->id,
+            'player_one' => $game->player_one->name,
+            'player_two' => optional($game->player_two)->name,
+            'status' => $game->status,
+            'winner' => optional($game->winner)->name,
         ];
     }
 

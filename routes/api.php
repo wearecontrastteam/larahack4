@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('v1')->name('v1.')->middleware('auth:api')->group(function (){
     Route::prefix('game/{game_hash}')->name('game.')->group(function(){
         Route::get('/', 'GameController@index')->name('index');
-
+        Route::post('/', 'GameController@update')->name('update');
+        Route::post('/guess', 'GameController@guess')->name('guess');
     });
 });

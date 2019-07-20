@@ -21,7 +21,18 @@ class PlayerOneGame extends JsonResource
     private function format(Game $game)
     {
         return [
-            'player_one_state' => $game->player_one_state
+            'id' => encrypt($game->id),
+            'current_player' => $game->current_player,
+            'people' => $game->people,
+            'player_one_state' => $game->player_one_state,
+            'player_one_person' => $game->player_one_person,
+        ];
+    }
+
+    public function with($request)
+    {
+        return [
+            'status' => 'ok'
         ];
     }
 }

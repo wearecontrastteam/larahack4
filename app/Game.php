@@ -40,6 +40,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Game wherePlayerOnePersonId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Game wherePlayerTwoPersonId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Game whereWinnerId($value)
+ * @property-read \App\Person $player_one_person
+ * @property-read \App\Person $player_two_person
+ * @property-read \App\User $winner
  */
 class Game extends Model
 {
@@ -84,6 +87,16 @@ class Game extends Model
     {
         return $this->player_one_id === $id
             || $this->player_two_id === $id;
+    }
+
+    public function isPlayerOne(int $id)
+    {
+        return $id === $this->player_one_id;
+    }
+
+    public function isPlayerTwo(int $id)
+    {
+        return $id === $this->player_two_id;
     }
 
 }

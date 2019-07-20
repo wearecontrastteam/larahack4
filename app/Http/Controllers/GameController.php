@@ -26,6 +26,16 @@ class GameController extends Controller
 
     public function join(Game $game)
     {
+        if($game->isPlayer(auth()->id())){
+            return redirect()->route('game.invalid')
+                ->with('message', 'You cannot join your own game');
+        }
+
+        if(!$game->isAwaitingOpponent()){
+            return redirect()->route('game.invalid')
+                ->with('message', 'You cannot join this game');
+        }
+
         if($game->isAwaitingOpponent()){
             $game->player_two_id = auth()->id();
             $game->current_player = rand(1,2);
@@ -34,7 +44,8 @@ class GameController extends Controller
             return redirect()->route('game.play', encrypt($game->id));
         }
 
-        return redirect()->route('game.invalid');
+        return redirect()->route('game.invalid')
+            ->with('message', 'Unknown error');
     }
 
     public function play(Game $game)
