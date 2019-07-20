@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\v1;
 
+use App\Game;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PlayerOneGame extends JsonResource
@@ -14,6 +15,13 @@ class PlayerOneGame extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return $this->format($this->resource);
+    }
+
+    private function format(Game $game)
+    {
+        return [
+            'player_one_state' => $game->player_one_state
+        ];
     }
 }
