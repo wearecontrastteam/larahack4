@@ -14,8 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/test', function () {
-    return view('test');
+Route::get('/play', function () {
+    return view('/game/play');
 });
 
 Auth::routes();
