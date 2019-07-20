@@ -22,14 +22,6 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 
-
-// Vue.component('opponent', require('./components/Opponent.vue'));
-// Vue.component('tiles', require('./components/Tiles.vue'));
-// Vue.component('you', require('./components/You.vue'));
-
-
-
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

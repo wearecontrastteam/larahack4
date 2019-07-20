@@ -1,6 +1,8 @@
 <template>
-    <div class="tiles">
-        <p> tiles go here</p>
+    <div class="game-board">
+
+        <
+
     </div>
 </template>
 
