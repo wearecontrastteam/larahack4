@@ -15,10 +15,10 @@ class GameController extends Controller
 
         $game = new Game();
         $game->player_one_id = auth()->id();
-        $game->status_id = GameStatus::CREATING;
+        $game->status_id = GameStatus::MATCHING;
         $game->people = $people;
-        $game->player_one_person_id = $people->random(1)->id;
-        $game->player_two_person_id = $people->random(1)->id;
+        $game->player_one_person_id = $people->random()->id;
+        $game->player_two_person_id = $people->random()->id;
         $game->save();
 
         return redirect()->route('game.play', encrypt($game->id));
@@ -39,6 +39,7 @@ class GameController extends Controller
         if($game->isAwaitingOpponent()){
             $game->player_two_id = auth()->id();
             $game->current_player = rand(1,2);
+            $game->status_id = GameStatus::IN_PROGRESS;
             $game->save();
 
             return redirect()->route('game.play', encrypt($game->id));
@@ -60,6 +61,7 @@ class GameController extends Controller
 
     public function invalid()
     {
+        dd(session('message'));
         return view('game.invalid');
     }
 }
