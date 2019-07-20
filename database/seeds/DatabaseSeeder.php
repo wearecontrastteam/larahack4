@@ -41,11 +41,17 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Andy',
                 'email' => 'theknight92@gmail.com',
                 'password' => Hash::make('secret'),
-            ]);
+             ]);
 
             User::updateOrCreate([
                 'name' => 'Simon',
                 'email' => 'simon@french-property.com',
+                'password' => Hash::make('secret'),
+            ]);
+
+            User::updateOrCreate([
+                'name' => 'Foo',
+                'email' => 'foo@foo.com',
                 'password' => Hash::make('secret'),
             ]);
         }
