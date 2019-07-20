@@ -1,6 +1,7 @@
 <?php
 
 use App\GameStatus;
+use App\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -28,5 +29,29 @@ class DatabaseSeeder extends Seeder
             );
         }
 
+
+        if(User::count() == 0) {
+            User::updateOrCreate([
+                'name' => 'Mike',
+                'email' => 'mike@wearecontrast.com',
+                'password' => Hash::make('secret'),
+            ]);
+
+            User::updateOrCreate([
+                'name' => 'Andy',
+                'email' => 'theknight92@gmail.com',
+                'password' => Hash::make('secret'),
+            ]);
+
+            User::updateOrCreate([
+                'name' => 'Simon',
+                'email' => 'simon@french-property.com',
+                'password' => Hash::make('secret'),
+            ]);
+        }
+
+        //User::create([
+//            'name' => ''
+//        ]);
     }
 }
