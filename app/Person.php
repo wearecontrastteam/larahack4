@@ -26,5 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Person extends Model
 {
-    //
+    protected $fillable = ['username', 'github_id', 'photo_url'];
+
+
 }

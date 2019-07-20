@@ -25,6 +25,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class GameStatus extends Model
 {
+    public const CREATING = 1;
+    public const MATCHING = 2;
+    public const IN_PROGRESS = 3;
+    public const FINISHED = 4;
+    public const ERROR = 5;
+
+    protected $fillable = ['id', 'status', 'description'];
+
     public function games()
     {
         return $this->belongsToMany(Game::class);

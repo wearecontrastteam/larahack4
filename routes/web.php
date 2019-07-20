@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/game/create', 'GameController@create')->name('game.create');
     Route::get('/game/{game_hash}/join', 'GameController@join')->name('game.join');
     Route::get('/game/{game_hash}', 'GameController@play')->name('game.play');
+    Route::get('/game/invalid', 'GameController@invalid')->name('game.invalid');
 
     Route::prefix('admin')->name('admin.')->group(function(){
 

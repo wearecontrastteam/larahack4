@@ -32,9 +32,19 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Game wherePlayerTwoState($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Game whereStatusId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Game whereUpdatedAt($value)
+ * @property mixed|null $people
+ * @property int|null $player_one_person_id
+ * @property int|null $player_two_person_id
+ * @property int|null $winner_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Game wherePeople($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Game wherePlayerOnePersonId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Game wherePlayerTwoPersonId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Game whereWinnerId($value)
  */
 class Game extends Model
 {
+    protected $fillable = ['player_one_id', 'status_id'];
+
     public function player_one()
     {
         return $this->hasOne(User::class);
@@ -48,6 +58,32 @@ class Game extends Model
     public function status()
     {
         return $this->hasOne(GameStatus::class);
+    }
+
+    public function player_one_person()
+    {
+        return $this->hasOne(Person::class);
+    }
+
+    public function player_two_person()
+    {
+        return $this->hasOne(Person::class);
+    }
+
+    public function winner()
+    {
+        return $this->hasOne(User::class);
+    }
+
+    public function isAwaitingOpponent()
+    {
+        return $this->status_id === GameStatus::MATCHING;
+    }
+
+    public function hasPlayer(int $id)
+    {
+        return $this->player_one_id === $id
+            || $this->player_two_id === $id;
     }
 
 }
