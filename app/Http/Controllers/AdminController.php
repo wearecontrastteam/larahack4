@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Person;
+use App\Services\PersonService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -28,20 +29,10 @@ class AdminController extends Controller
             abort(403);
         }
 
-        $client = new \GuzzleHttp\Client();
-        $res = $client->request('GET', 'https://api.github.com/users/' . $request->get('github_username'));
-        $response_contents = json_decode($res->getBody()->getContents(), true);
-
-        Person::updateOrCreate([
-            'login' => $response_contents['login'],
-            'name' => $response_contents['name'],
-            'avatar_url' => $response_contents['avatar_url'],
-            'bio' => $response_contents['bio'],
-            'github_id' => $response_contents['id'],
-        ]);
+        $service = new PersonService();
+        $service->importPersonFromGithub($request->get('github_username'));
 
         return redirect('/admin');
 
-        // login, avatar_url, bio
     }
 }
