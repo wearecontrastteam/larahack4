@@ -11,14 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/play', function () {
-    return view('/game/play');
-});
-
 Auth::routes();
+
+Route::get('/', 'WelcomeController@index')->name('welcome');
 
 Route::middleware('auth')->group(function(){
 
