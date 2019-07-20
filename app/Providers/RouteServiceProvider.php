@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Game;
+use Exception;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -23,9 +26,15 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
+
+        Route::bind('game_hash', function($value){
+            try{
+                return Game::findOrFail(decrypt($value));
+            } catch (Exception $e){
+                return abort(404);
+            }
+        });
     }
 
     /**

@@ -17,4 +17,21 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware('auth')->group(function(){
+
+    Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::get('/lobby', 'LobbyController@index')->name('lobby.index');
+
+    Route::get('/game/create', 'GameController@create')->name('game.create');
+    Route::get('/game/{game_hash}/join', 'GameController@join')->name('game.join');
+    Route::get('/game/{game_hash}', 'GameController@play')->name('game.play');
+
+    Route::prefix('admin')->name('admin.')->group(function(){
+
+        Route::get('/', 'AdminController@index')->name('index');
+        Route::post('/add-person', 'AdminController@add_person')->name('add_person');
+
+    });
+
+});
