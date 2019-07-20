@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="play">
+    <div class=" col-md-12 play">
     <opponent username="Test Name 1"></opponent>
     <tiles></tiles>
     <you></you>

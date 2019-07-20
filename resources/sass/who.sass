@@ -1,4 +1,92 @@
-.test
-  font-size: 16px
-  .icle
-    color: red
+.game-board
+  display: flex
+  flex-wrap: wrap
+  background: #bbe8ff
+  border-radius: 4px
+  border: 1px solid #72aee6
+  .tile-slot
+    width: calc(20% - 10px)
+    border: 1px solid #4d87bd
+    border-radius: 4px
+    margin: 10px
+    background: #4179ad
+    position: relative
+    .shadow-tile
+      width: calc(100% - 10px)
+      height: calc(100% - 10px)
+      padding: 10px
+      border-radius: 4px
+      margin: 5px
+      position: absolute
+      img
+        filter: grayscale(90%)
+        opacity: 0.9
+    .tile
+      width: calc(100% - 10px)
+      height: calc(100% - 10px)
+      padding: 10px
+      border: 1px solid #4d87bd
+      border-radius: 4px
+      margin: 5px
+      transition: transform .75s
+      transform-origin: bottom
+      transform: rotateX(0deg)
+      background: #72aee6
+      &.flipped
+        transform: rotateX(90deg)
+    .tile, .shadow-tile
+      img
+        width: 100%
+        border-radius: 6px
+      .name
+        display: block
+        text-align: center
+        font-size: 20px
+        margin-top: 10px
+        color: #ffffff
+      .bio
+        display: block
+        text-align: justify
+        margin-top: 10px
+        background: #ffffff
+        border-radius: 4px
+        padding: 4px 14px
+    .flip-button
+      background: #ff8700
+      position: absolute
+      top: 6px
+      right: 6px
+      color: #ffffff
+      width: 34px
+      height: 34px
+      border-radius: 0
+      border-top-right-radius: 4px
+      cursor: pointer
+      &:after
+        content: " "
+        border-width: 17px
+        border-style: solid
+        position: absolute
+        border-color: #ff8700 #ff8700 transparent transparent
+        top: calc(100% + 1px)
+        right: -1px
+        width: 0
+        height: 0
+      &:before
+        content: " "
+        border-width: 17px
+        border-style: solid
+        position: absolute
+        border-color: #ff8700 #ff8700 transparent transparent
+        top: -1px
+        left: calc(-100% + -3px )
+        width: 0
+        height: 0
+      &.hide
+        display: none
+      input
+        position: absolute
+        clip: rect(0,0,0,0)
+        pointer-events: none
+      .fa
+        transform: rotate(-45deg)
