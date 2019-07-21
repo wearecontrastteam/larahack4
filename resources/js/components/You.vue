@@ -3,7 +3,6 @@
         <div class="your-selection">
             <img :src="game.person.avatar_url" >
             <span class="name">{{game.person.name}}</span>
-            <span v-if="hasBio" class="bio">{{game.person.bio}}</span>
         </div>
     </div>
 </template>
