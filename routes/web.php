@@ -37,8 +37,11 @@ Route::middleware('auth')->group(function(){
 
     Route::namespace('Api')->prefix('api')->name('api.')->group(function() {
         Route::prefix('v1')->name('v1.')->namespace('v1')->group(function () {
+            Route::get('games/matching', 'GameController@matching')->name('game.matching');
+            Route::get('games/recent', 'GameController@recent')->name('game.recent');
+
             Route::prefix('game/{game_hash}')->name('game.')->group(function () {
-                Route::get('/', 'GameController@index')->name('index');
+                Route::get('/', 'GameController@show')->name('show');
                 Route::post('/', 'GameController@update')->name('update');
                 Route::post('/ask', 'GameController@ask')->name('ask');
                 Route::post('/guess', 'GameController@guess')->name('guess');
