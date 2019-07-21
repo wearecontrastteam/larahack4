@@ -49,6 +49,11 @@ return [
         'app_key' => env('PUSHER_APP_KEY'),
         'app_secret' => env('PUSHER_APP_SECRET'),
         'app_cluster' => env('PUSHER_APP_CLUSTER'),
+    ],
+
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
     ]
 
 ];

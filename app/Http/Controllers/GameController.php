@@ -75,7 +75,7 @@ class GameController extends Controller
 
         return view('game.play')
             ->with('game_id', encrypt($game->id))
-            ->with('game_id_hashed', sha1($game->id . env('CHAT_HASH_SECRET')));
+            ->with('game_id_hashed', sha1($game->id . config('app.chat_hash_secret')));
     }
 
     public function invalid()

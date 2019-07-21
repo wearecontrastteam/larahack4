@@ -14,7 +14,7 @@ class PersonService
         try{
             $res = (new Client())->request('GET',
                 'https://api.github.com/users/' . $username
-                . "?client_id=" . env('GITHUB_CLIENT_ID') . "&client_secret=" . env('GITHUB_CLIENT_SECRET')
+                . "?client_id=" . config('github.client_id') . "&client_secret=" . config('github.client_secret')
             );
             $response_contents = json_decode($res->getBody()->getContents(), true);
 

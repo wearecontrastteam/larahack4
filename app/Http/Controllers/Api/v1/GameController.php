@@ -125,13 +125,13 @@ class GameController extends Controller
         $question = $request->get('question');
 
         $pusher = new \Pusher\Pusher(
-            env('PUSHER_APP_KEY'),
-            env('PUSHER_APP_SECRET'),
-            env('PUSHER_APP_ID'),
-            array('cluster' => env('PUSHER_APP_CLUSTER'))
+            config('services.pusher.app_key'),
+            config('services.pusher.app_secret'),
+            config('services.pusher.app_id'),
+            array('cluster' => config('services.pusher.app_cluster'))
         );
 
-        $channel = "game-" . sha1($game->id . env('CHAT_HASH_SECRET'));
+        $channel = "game-" . sha1($game->id . config('app.chat_hash_secret'));
 
         $player = null;
 
@@ -157,13 +157,13 @@ class GameController extends Controller
         $question = $request->get('question');
 
         $pusher = new \Pusher\Pusher(
-            env('PUSHER_APP_KEY'),
-            env('PUSHER_APP_SECRET'),
-            env('PUSHER_APP_ID'),
-            array('cluster' => env('PUSHER_APP_CLUSTER'))
+            config('services.pusher.app_key'),
+            config('services.pusher.app_secret'),
+            config('services.pusher.app_id'),
+            array('cluster' => config('services.pusher.app_cluster'))
         );
 
-        $channel = "game-" . sha1($game->id . env('CHAT_HASH_SECRET'));
+        $channel = "game-" . sha1($game->id . config('app.chat_hash_secret'));
 
         $player = null;
 

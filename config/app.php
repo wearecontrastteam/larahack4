@@ -226,4 +226,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
     ],
+
+    'chat_hash_secret' => env('CHAT_HASH_SECRET')
 ];
