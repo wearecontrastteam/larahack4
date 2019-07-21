@@ -109,7 +109,7 @@ class GameController extends Controller
             }
 
             if($game->player_two_person_id === $request->input('person_id')){
-                $game->winner_id = 1;
+                $game->winner_id = $game->player_one_id;
                 $game->status_id = GameStatus::FINISHED;
                 $game->save();
 
@@ -129,7 +129,7 @@ class GameController extends Controller
             }
 
             if($game->player_one_person_id === $request->input('person_id')){
-                $game->winner_id = 2;
+                $game->winner_id = $game->player_two_id;
                 $game->status_id = GameStatus::FINISHED;
                 $game->save();
 

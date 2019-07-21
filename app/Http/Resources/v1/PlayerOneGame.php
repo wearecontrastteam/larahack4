@@ -20,6 +20,11 @@ class PlayerOneGame extends JsonResource
 
     private function format(Game $game)
     {
+        $winner = '';
+        if($game->winner_id !== null) {
+            $winner = ($game->winner_id == $game->player_one_id) ? 'You win!' : 'You lose!';
+        }
+
         return [
             'id' => encrypt($game->id),
             'current_player' => $game->current_player,
@@ -31,7 +36,7 @@ class PlayerOneGame extends JsonResource
             'player_number' => 1,
             'subturn' => $game->subturn_id,
             'status' => $game->status_id,
-            'winner' => $game->winner_id,
+            'winner' => $winner,
         ];
     }
 
