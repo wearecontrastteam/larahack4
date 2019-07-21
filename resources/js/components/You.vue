@@ -1,12 +1,14 @@
 <template>
     <div class="you">
-        your image goes here
+
+        {{game.person.avatar_url}}
+        {{game.person.name}}
     </div>
 </template>
 
 
 <script>
     export default {
-
+        props: ['game']
     }
 </script>

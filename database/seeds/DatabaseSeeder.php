@@ -53,6 +53,7 @@ class DatabaseSeeder extends Seeder
                     'name' => $admin['name'],
                     'email' => $admin['email'],
                     'password' => Hash::make('secret'),
+                    'api_token' => \Illuminate\Support\Str::random(60),
                 ]);
             }
         }

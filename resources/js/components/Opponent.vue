@@ -1,6 +1,6 @@
 <template>
     <div class="opponent">
-        <p><strong>Opponent Name:</strong> {{username}}</p>
+        <p><strong>Opponent Name:</strong> {{game.opponent}}</p>
     </div>
 </template>
 
@@ -8,7 +8,7 @@
 <script>
     export default {
         props: [
-            'username'
+            'game'
         ],
     }
 </script>

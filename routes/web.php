@@ -33,4 +33,14 @@ Route::middleware('auth')->group(function(){
 
     });
 
+    Route::namespace('Api')->prefix('api')->name('api.')->group(function(){
+        Route::prefix('v1')->name('v1.')->namespace('v1')->group(function (){
+            Route::prefix('game/{game_hash}')->name('game.')->group(function(){
+                Route::get('/', 'GameController@index')->name('index');
+                Route::post('/', 'GameController@update')->name('update');
+                Route::post('/guess', 'GameController@guess')->name('guess');
+            });
+        });
+    });
+
 });
