@@ -36,6 +36,7 @@
                     },
                     state: null,
                     player: '',
+                    player_number: '',
                     subturn: null,
                 },
                 pusher: null,
@@ -85,6 +86,7 @@
                             this.game.person = data.person;
                             this.game.opponent = data.opponent;
                             this.game.player = data.player;
+                            this.game.player_number = data.player_number;
                             this.game.turn = data.turn;
                             this.game.subturn = data.subturn;
 
