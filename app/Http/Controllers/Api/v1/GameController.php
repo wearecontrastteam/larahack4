@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Game;
 use App\GameStatus;
+use App\GameSubturn;
 use App\Http\Resources\v1\PlayerOneGame;
 use App\Http\Resources\v1\PlayerTwoGame;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
+use Pusher\Pusher;
 
 class GameController extends Controller
 {
@@ -124,7 +127,7 @@ class GameController extends Controller
     {
         $question = $request->get('question');
 
-        $pusher = new \Pusher\Pusher(
+        $pusher = new Pusher(
             env('PUSHER_APP_KEY'),
             env('PUSHER_APP_SECRET'),
             env('PUSHER_APP_ID'),
@@ -142,21 +145,31 @@ class GameController extends Controller
         if($game->isPlayerTwo(auth()->id())) {
             $player = 2;
         }
+
+        if($player != $game->current_player) {
+            return new Response("Not your turn", 403);
+        }
+
+        if($game->subturn_id != GameSubturn::ASK_QUESTION) {
+            return new Response("It's not time to ask questions", 403);
+        }
+
+        $game->subturn_id = GameSubturn::WAIT_FOR_QUESTION_ANSWER;
+
+        $game->save();
 
         $pusher->trigger($channel, "player-$player-asks", [
             'message' => $question
         ]);
 
-        $pusher->trigger($channel, 'game-updated', [
-            'message' => 1
-        ]);
+        $pusher->trigger($channel, 'game-updated', []);
     }
 
     public function answer(Game $game, Request $request)
     {
-        $question = $request->get('question');
+        $answer = $request->get('answer');
 
-        $pusher = new \Pusher\Pusher(
+        $pusher = new Pusher(
             env('PUSHER_APP_KEY'),
             env('PUSHER_APP_SECRET'),
             env('PUSHER_APP_ID'),
@@ -175,12 +188,58 @@ class GameController extends Controller
             $player = 2;
         }
 
+        if($player == $game->current_player) {
+            return new Response("Not your turn", 403);
+        }
+
+        if($game->subturn_id != GameSubturn::WAIT_FOR_QUESTION_ANSWER) {
+            return new Response("It's not time to answer questions", 403);
+        }
+
+        $game->subturn_id = GameSubturn::FLIP_FACES;
+        $game->save();
+
         $pusher->trigger($channel, "player-$player-answers", [
-            'message' => $question
+            'message' => $answer
         ]);
 
-        $pusher->trigger($channel, 'game-updated', [
-            'message' => 1
-        ]);
+        $pusher->trigger($channel, 'game-updated', []);
+    }
+
+    public function endturn(Game $game)
+    {
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            array('cluster' => env('PUSHER_APP_CLUSTER'))
+        );
+
+        $channel = "game-" . sha1($game->id . env('CHAT_HASH_SECRET'));
+
+        $player = null;
+
+        if($game->isPlayerOne(auth()->id())) {
+            $player = 1;
+        }
+
+        if($game->isPlayerTwo(auth()->id())) {
+            $player = 2;
+        }
+
+        if($player !== $game->current_player) {
+            return new Response("Not your turn", 403);
+        }
+
+        if($game->subturn_id != GameSubturn::FLIP_FACES) {
+            return new Response("It's not time to answer questions", 403);
+        }
+
+        $game->subturn_id = GameSubturn::ASK_QUESTION;
+        $game->switchPlayer();
+        $game->save();
+
+        $pusher->trigger($channel, 'game-updated', []);
     }
 }
