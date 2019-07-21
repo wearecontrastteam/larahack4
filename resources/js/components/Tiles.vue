@@ -6,6 +6,7 @@
                   :name="person.name"
                   :bio="person.bio"
                   :state="getPersonState(person.id)"
+                  :gameId="gameId"
                   @flipDownPerson="flipDownPerson"
                   @flipUpPerson="flipUpPerson"
             ></tile>
@@ -16,7 +17,7 @@
 
 <script>
     export default {
-        props: ['game'],
+        props: ['gameId', 'game'],
         methods:{
             getPersonState(id){
                 return this.game.state.find(e => e.id === id).state;

@@ -9,9 +9,11 @@
                     <question :game="game" :game_id="gameId"></question>
                     Player {{game.currentPlayer}}'s turn<br>
                     Subturn: {{game.subturn}}<br>
+                    Status: {{game.status}} (3 is in progress, 4 is won)<br>
+                    Winning player: {{game.winner}}
                 </div>
                 <div class="col-md-9">
-                    <tiles :game="game" @stateupdated="saveGameState"></tiles>
+                    <tiles :game-id="gameId" :game="game" @stateupdated="saveGameState"></tiles>
                 </div>
             </div>
         </div>
@@ -37,7 +39,9 @@
                     state: null,
                     player: '',
                     player_number: '',
+                    status: null,
                     subturn: null,
+                    winner: null,
                 },
                 pusher: null,
                 channel: null
@@ -89,6 +93,8 @@
                             this.game.player_number = data.player_number;
                             this.game.turn = data.turn;
                             this.game.subturn = data.subturn;
+                            this.game.status = data.status;
+                            this.game.winner = data.winner;
 
                             if(this.game.state === null){
                                 this.game.state = data.state;
