@@ -6,7 +6,7 @@
                 <div class="col-md-3 players">
                     <opponent :game="game"></opponent>
                     <you :game="game"></you>
-                    <question :game="game" :game_id="gameId"></question>
+                    <question :game="game" :game_id="gameId" :pusher="pusher"></question>
                     Player {{game.currentPlayer}}'s turn<br>
                     Subturn: {{game.subturn}}<br>
                 </div>
@@ -62,18 +62,6 @@
                 this.channel = this.pusher.subscribe(this.getPusherChannelName);
                 this.channel.bind('game-updated', function(data) {
                     this.updateGameState();
-                }.bind(this));
-                this.channel.bind('player-1-asks', function(data) {
-                    console.log('A player-1-asks event was triggered with message: ' + data.message);
-                }.bind(this));
-                this.channel.bind('player-1-answers', function(data) {
-                    console.log('A player-1-answers event was triggered with message: ' + data.message);
-                }.bind(this));
-                this.channel.bind('player-2-asks', function(data) {
-                    console.log('A player-2-asks event was triggered with message: ' + data.message);
-                }.bind(this));
-                this.channel.bind('player-2-answers', function(data) {
-                    console.log('A player-2-answers event was triggered with message: ' + data.message);
                 }.bind(this));
             },
             updateGameState(){
