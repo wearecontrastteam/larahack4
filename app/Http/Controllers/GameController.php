@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Game;
 use App\GameStatus;
+use App\GameSubturn;
 use App\Person;
 use Illuminate\Http\Request;
 
@@ -40,6 +41,7 @@ class GameController extends Controller
             $game->player_two_id = auth()->id();
             $game->current_player = rand(1,2);
             $game->status_id = GameStatus::IN_PROGRESS;
+            $game->subturn_id = GameSubturn::ASK_QUESTION;
             $game->save();
 
             return redirect()->route('game.play', encrypt($game->id));
