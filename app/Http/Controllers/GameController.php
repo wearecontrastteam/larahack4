@@ -44,8 +44,7 @@ class GameController extends Controller
     public function join(Game $game)
     {
         if($game->isPlayer(auth()->id())){
-            return redirect()->route('game.invalid')
-                ->with('message', 'You cannot join your own game');
+            return redirect()->route('game.play', encrypt($game->id));
         }
 
         if(!$game->isAwaitingOpponent()){

@@ -1,7 +1,7 @@
 <template>
     <div class="question form-group">
         <input class="form-control" type="text" v-model="question" placeholder="Your Question" />
-        <button class="btn btn-primary" @click="askQuestion(question)">Ask</button>
+        <button class="btn btn-primary btn-block mt-1" @click="askQuestion(question)">Ask</button>
     </div>
 </template>
 
