@@ -6,7 +6,7 @@
                 <div class="col-md-3 players">
                     <opponent :game="game"></opponent>
                     <you :game="game"></you>
-                    <question :game="game" :game_id="gameId" :pusher="pusher"></question>
+                    <question :game="game" :game_id="gameId" :channel="channel"></question>
                     <template v-if="game.status == 4")>
                         <h3 v-if="game.winner == game.player_number">You win!</h3>
                         <h3 v-if="game.winner != game.player_number">You lose!</h3>
