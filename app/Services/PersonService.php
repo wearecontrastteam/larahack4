@@ -12,7 +12,10 @@ class PersonService
     public function importPersonFromGithub($username)
     {
         try{
-            $res = (new Client())->request('GET', 'https://api.github.com/users/' . $username);
+            $res = (new Client())->request('GET',
+                'https://api.github.com/users/' . $username
+                . "?client_id=" . env('GITHUB_CLIENT_ID') . "&client_secret=" . env('GITHUB_CLIENT_SECRET')
+            );
             $response_contents = json_decode($res->getBody()->getContents(), true);
 
             Person::updateOrCreate([

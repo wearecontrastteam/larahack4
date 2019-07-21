@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function(){
             Route::prefix('game/{game_hash}')->name('game.')->group(function () {
                 Route::get('/', 'GameController@index')->name('index');
                 Route::post('/', 'GameController@update')->name('update');
+                Route::post('/ask', 'GameController@ask')->name('ask');
                 Route::post('/guess', 'GameController@guess')->name('guess');
             });
         });
@@ -49,7 +50,7 @@ Route::middleware('auth')->group(function(){
         return view('pusher-example');
     });
 
-    Route::get('pusher-send', function() {
+    Route::get('pusher-send/{game_id}', function($game_id) {
         $pusher = new Pusher\Pusher(
             env('PUSHER_APP_KEY'),
             env('PUSHER_APP_SECRET'),
@@ -57,11 +58,15 @@ Route::middleware('auth')->group(function(){
             array('cluster' => env('PUSHER_APP_CLUSTER'))
         );
 
-        $pusher->trigger('my-channel', 'game-updated', [
+        $game_id = decrypt($game_id);
+        $channel = "game-" . sha1($game_id);
+        //dd($channel);
+
+        $pusher->trigger($channel, 'game-updated', [
             'message' => '1'
         ]);
 
-        $pusher->trigger('my-channel', 'chat-message', [
+        $pusher->trigger($channel, 'question', [
             'message' => 'Grey hair?'
         ]);
 
