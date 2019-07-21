@@ -1,17 +1,17 @@
 <template>
     <div class="tile-slot">
-        <div class="shadow-tile" v-if="flipped" :id="id">
+        <div class="shadow-tile" v-if="isFlippedDown" :id="id">
             <img :src="avatar_url" >
             <span class="name">{{name}}</span>
             <span v-if="showBio" class="bio">{{bio}}</span>
         </div>
-        <div class="tile" :class="{ flipped: flipped }" :id="id">
+        <div class="tile" :class="{ flipped: isFlippedDown }" :id="id">
             <img :src="avatar_url" >
             <span class="name">{{name}}</span>
             <span v-if="showBio" class="bio">{{bio}}</span>
         </div>
-        <label class="btn flip-button" :class="{ hide: flipped }">
-            <input type="checkbox" v-model="flipped">
+        <label class="btn flip-button" :class="{ hide: isFlippedDown }">
+            <input type="checkbox" @click="flipDownPerson">
 
             <i class="fa fa-undo" aria-hidden="true"></i>
         </label>
@@ -19,7 +19,7 @@
 </template>
 <script>
     export default {
-        props: ['id','avatar_url','name','bio',],
+        props: ['id','avatar_url','name','bio','state'],
         data() {
             return {
                 flipped: false,
@@ -27,8 +27,15 @@
         },
         computed:{
             showBio(){
-                return false
-                // return this.bio && this.bio.length > 0;
+                return this.bio && this.bio.length > 0;
+            },
+            isFlippedDown(){
+                return this.state === 0;
+            }
+        },
+        methods:{
+            flipDownPerson(){
+                this.$emit('flipDownPerson', this.id);
             }
         }
     }

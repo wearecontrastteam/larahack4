@@ -47,6 +47,7 @@ use Illuminate\Database\Eloquent\Model;
 class Game extends Model
 {
     protected $fillable = ['player_one_id', 'status_id'];
+    protected $casts = ['people' => 'array', 'player_one_state' => 'array', 'player_two_state' => 'array'];
 
     public function player_one()
     {

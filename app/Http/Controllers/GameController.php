@@ -7,6 +7,7 @@ use App\GameStatus;
 use App\GameSubturn;
 use App\Person;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class GameController extends Controller
 {
@@ -20,9 +21,24 @@ class GameController extends Controller
         $game->people = $people;
         $game->player_one_person_id = $people->random()->id;
         $game->player_two_person_id = $people->random()->id;
+        $game->player_one_state = $this->generatePlayerState($people);
+        $game->player_two_state = $this->generatePlayerState($people);
         $game->save();
 
         return redirect()->route('game.play', encrypt($game->id));
+    }
+
+    /**
+     * @param Person[] $people
+     * @return array
+     */
+    private function generatePlayerState($people)
+    {
+        $state = collect([]);
+        foreach($people as $person){
+            $state->push(['id' => $person->id, 'state' => 1]);
+        }
+        return $state->toArray();
     }
 
     public function join(Game $game)
