@@ -7,10 +7,11 @@
                     <opponent :game="game"></opponent>
                     <you :game="game"></you>
                     <question :game="game" :game_id="gameId" :pusher="pusher"></question>
-                    Player {{game.currentPlayer}}'s turn<br>
+                    <template v-if="game.status == 4")>
+                        <h3 v-if="game.winner == game.player_number">You win!</h3>
+                        <h3 v-if="game.winner != game.player_number">You lose!</h3>
+                    </template>
                     Subturn: {{game.subturn}}<br>
-                    Status: {{game.status}} (3 is in progress, 4 is won)<br>
-                    Winning player: {{game.winner}}
                 </div>
                 <div class="col-md-9">
                     <tiles :game-id="gameId" :game="game" @stateupdated="saveGameState"></tiles>

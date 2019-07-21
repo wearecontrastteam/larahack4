@@ -99,6 +99,10 @@ class GameController extends Controller
             return ['status' => 'error', 'error' => 'You are not a player in this game'];
         }
 
+        if($game->status_id == GameStatus::FINISHED) {
+            return new Response("The game has finished", 403);
+        }
+
         if($game->isPlayerOne(auth()->id())) {
             if($game->current_player !== 1){
                 return ['status' => 'error', 'error' => 'You must wait until your turn to guess'];
@@ -164,6 +168,10 @@ class GameController extends Controller
             $player = 2;
         }
 
+        if($game->status_id == GameStatus::FINISHED) {
+            return new Response("The game has finished", 403);
+        }
+
         if($player != $game->current_player) {
             return new Response("Not your turn", 403);
         }
@@ -206,6 +214,10 @@ class GameController extends Controller
             $player = 2;
         }
 
+        if($game->status_id == GameStatus::FINISHED) {
+            return new Response("The game has finished", 403);
+        }
+
         if($player == $game->current_player) {
             return new Response("Not your turn", 403);
         }
@@ -244,6 +256,10 @@ class GameController extends Controller
 
         if($game->isPlayerTwo(auth()->id())) {
             $player = 2;
+        }
+
+        if($game->status_id == GameStatus::FINISHED) {
+            return new Response("The game has finished", 403);
         }
 
         if($player !== $game->current_player) {
