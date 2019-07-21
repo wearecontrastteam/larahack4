@@ -44,6 +44,7 @@
                             this.game.people = JSON.parse(data.people);
                             this.game.person = data.person;
                             this.game.opponent = data.opponent;
+                            this.game.player = data.player;
 
                             if(this.state === null){
                                 this.game.state = data.state;
