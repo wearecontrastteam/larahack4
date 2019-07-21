@@ -11,11 +11,17 @@
                 <div class="col-md-3 players">
                     <opponent :game="game"></opponent>
                     <you :game="game"></you>
-                    <question :game="game" :game_id="gameId" :channel="channel"></question>
-                    Subturn: {{game.subturn}}<br>
+                    <question :game="game"
+                              :game_id="gameId"
+                              :channel="channel"
+                              :isGuessing="isGuessing"
+                              @enableguess="enableGuess"
+                              @disableGuessing="disableGuessing"
+                    ></question>
+                    <h3>{{game.winner}}</h3>
                 </div>
                 <div class="col-md-9">
-                    <tiles :game-id="gameId" :game="game" @stateupdated="saveGameState"></tiles>
+                    <tiles :game-id="gameId" :game="game" :isGuessing="isGuessing" @stateupdated="saveGameState"></tiles>
                 </div>
             </div>
         </div>
@@ -46,7 +52,8 @@
                     winner: null,
                 },
                 pusher: null,
-                channel: null
+                channel: null,
+                isGuessing: false,
             };
         },
         mounted(){
@@ -89,7 +96,6 @@
                             if (this.game.state === null) {
                                 this.game.state = data.state;
                             }
-
                         }
 
                         console.log(this.game);
@@ -113,6 +119,13 @@
                 return {
                     state: this.game.state
                 };
+            },
+            enableGuess(){
+                console.log('enable guess');
+                this.isGuessing = true;
+            },
+            disableGuessing(){
+                this.isGuessing = false;
             }
         }
     }
