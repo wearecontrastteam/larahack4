@@ -12,7 +12,6 @@
                     <opponent :game="game"></opponent>
                     <you :game="game"></you>
                     <question :game="game" :game_id="gameId" :channel="channel"></question>
-                    Subturn: {{game.subturn}}<br>
                 </div>
                 <div class="col-md-9">
                     <tiles :game-id="gameId" :game="game" @stateupdated="saveGameState"></tiles>

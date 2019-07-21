@@ -8,6 +8,7 @@ use App\GameSubturn;
 use App\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Pusher\Pusher;
 
 class GameController extends Controller
 {
@@ -43,6 +44,16 @@ class GameController extends Controller
 
     public function join(Game $game)
     {
+        $pusher = new Pusher(
+            config('services.pusher.app_key'),
+            config('services.pusher.app_secret'),
+            config('services.pusher.app_id'),
+            array('cluster' => config('services.pusher.app_cluster'))
+        );
+
+        $channel = "game-" . sha1($game->id . config('app.chat_hash_secret'));
+
+
         if($game->isPlayer(auth()->id())){
             return redirect()->route('game.play', encrypt($game->id));
         }
@@ -58,6 +69,8 @@ class GameController extends Controller
             $game->status_id = GameStatus::IN_PROGRESS;
             $game->subturn_id = GameSubturn::ASK_QUESTION;
             $game->save();
+
+            $pusher->trigger($channel, 'game-updated', []);
 
             return redirect()->route('game.play', encrypt($game->id));
         }
