@@ -1,8 +1,11 @@
 <template>
-    <div class=" col-md-12 play">
-        <opponent :game="game"></opponent>
-        <tiles :game="game"></tiles>
-        <you :game="game"></you>
+
+    <div class="container">
+        <div class=" col-md-12 play">
+            <opponent :game="game"></opponent>
+            <tiles :game="game" @stateupdated="saveGameState"></tiles>
+            <you :game="game"></you>
+        </div>
     </div>
 </template>
 
@@ -12,7 +15,6 @@
         props: ['gameId'],
         data(){
             return {
-                apiBase: '/api/v1/game/',
                 game: {
                     opponent: '',
                     currentPlayer: null,
@@ -41,12 +43,12 @@
                         if(response.data.status === 'ok'){
                             let data = response.data.data;
                             this.game.currentPlayer = data.current_player;
-                            this.game.people = JSON.parse(data.people);
+                            this.game.people = data.people;
                             this.game.person = data.person;
                             this.game.opponent = data.opponent;
                             this.game.player = data.player;
 
-                            if(this.state === null){
+                            if(this.game.state === null){
                                 this.game.state = data.state;
                             }
                         }
@@ -59,6 +61,17 @@
                 }
 
                 return apiUrl;
+            },
+            saveGameState(){
+                axios.post(this.getApiUrl(), this.getFormattedGameStateToSave())
+                    .then(response => {
+                        console.log(response);
+                    })
+            },
+            getFormattedGameStateToSave() {
+                return {
+                    state: this.game.state
+                };
             }
         }
     }
