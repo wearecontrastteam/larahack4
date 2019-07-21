@@ -1,5 +1,5 @@
 <template>
-    <div class="you">
+    <div class="you" :class="player_number">
 
         <div class="your-selection">
             <img :src="avatar_url" >
@@ -15,7 +15,8 @@
         props: [
             'avatar_url',
             'name',
-            'bio'
+            'bio',
+            'player_number'
         ],
     }
 </script>

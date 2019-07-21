@@ -1,5 +1,5 @@
 <template>
-    <div class="game-board">
+    <div class="game-board" :class="player_number">
         <template v-for="user in users">
             <tile :id="user.id" :avatar_url="user.avatar_url" :name="user.name" :bio="user.bio"></tile>
         </template>
@@ -9,6 +9,9 @@
 
 <script>
     export default {
+        props: [
+            'player_number',
+        ],
         data() {
             return {
                 users: [
