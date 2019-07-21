@@ -2,12 +2,19 @@
 
     <div class="container">
         <div class=" col-md-12 play">
-            <opponent :game="game"></opponent>
-            Player {{game.currentPlayer}}'s turn<br>
-            Subturn: {{game.subturn}}<br>
-            <you :game="game"></you>
-            <tiles :game="game" @stateupdated="saveGameState"></tiles>
-            <question :game="game" :game_id="gameId"></question>
+            <div class="row">
+                <div class="col-md-3">
+                    <you :game="game"></you>
+                    <opponent :game="game"></opponent>
+                    <question :game="game" :game_id="gameId"></question>
+                    Player {{game.currentPlayer}}'s turn<br>
+                    Subturn: {{game.subturn}}<br>
+                </div>
+                <div class="col-md-9">
+                    <tiles :game="game" @stateupdated="saveGameState"></tiles>
+
+                </div>
+            </div>
         </div>
     </div>
 </template>
