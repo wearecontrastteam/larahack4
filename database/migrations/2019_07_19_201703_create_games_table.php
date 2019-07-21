@@ -26,7 +26,6 @@ class CreateGamesTable extends Migration
             $table->foreign('player_one_id')->references('id')->on('users');
             $table->foreign('player_two_id')->references('id')->on('users');
             $table->foreign('status_id')->references('id')->on('game_statuses');
-            $table->foreign('subturn_id')->references('id')->on('game_subturns');
         });
     }
 

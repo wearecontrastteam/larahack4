@@ -1,6 +1,7 @@
 <?php
 
 use App\GameStatus;
+use App\GameSubturn;
 use App\Person;
 use App\Services\PersonService;
 use App\User;
@@ -16,8 +17,25 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->seedGameStatuses();
+        $this->seedGameSubturns();
         $this->seedAdmins();
         $this->seedPeople();
+    }
+
+    private function seedGameSubturns(): void
+    {
+        $gameSubturns = [
+            ['id' => 1, 'status' => 'Ask question', 'description' => ''],
+            ['id' => 2, 'status' => 'Wait for question answer', 'description' => ''],
+            ['id' => 3, 'status' => 'Flip faces', 'description' => ''],
+        ];
+
+        foreach ($gameSubturns as $subturn) {
+            GameSubturn::updateOrCreate(
+                ['id' => $subturn['id']],
+                ['status' => $subturn['status'], 'description' => $subturn['description']]
+            );
+        }
     }
 
     private function seedGameStatuses(): void
@@ -53,7 +71,6 @@ class DatabaseSeeder extends Seeder
                     'name' => $admin['name'],
                     'email' => $admin['email'],
                     'password' => Hash::make('secret'),
-                    'api_token' => \Illuminate\Support\Str::random(60),
                 ]);
             }
         }

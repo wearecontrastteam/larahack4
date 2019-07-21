@@ -23,6 +23,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Person wherePhotoUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Person whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Person whereUsername($value)
+ * @property string $login
+ * @property string|null $name
+ * @property string $avatar_url
+ * @property string|null $bio
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Person whereAvatarUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Person whereBio($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Person whereLogin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Person whereName($value)
  */
 class Person extends Model
 {
