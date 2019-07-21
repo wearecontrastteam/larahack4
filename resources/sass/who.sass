@@ -178,3 +178,26 @@ $player-2-flip-colour: #13CC4E
     .your-selection
       background: $player-1-colour
       border: 1px solid darken($player-1-colour, 30%)
+.opponent
+  .selection
+    position: relative
+    width: 250px
+    padding: 10px
+    border-radius: 4px
+    margin: 15px auto
+    +shadow(2)
+  &.player-1
+    .selection
+      background: $player-1-colour
+      border: 1px solid darken($player-1-colour, 30%)
+      .colour
+        fill: $player-2-colour
+        fill-rule: evenodd
+
+  &.player-2
+    .selection
+      background: $player-2-colour
+      border: 1px solid darken($player-2-colour, 30%)
+      .colour
+        fill: $player-1-colour
+        fill-rule: evenodd
