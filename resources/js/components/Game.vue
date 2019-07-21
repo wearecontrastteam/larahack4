@@ -3,7 +3,7 @@
     <div class="container">
         <div class=" col-md-12 play">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 players">
                     <opponent :game="game"></opponent>
                     <you :game="game"></you>
                     <question :game="game" :game_id="gameId"></question>
