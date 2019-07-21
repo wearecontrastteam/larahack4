@@ -3,8 +3,8 @@
     <div class="container">
         <div class=" col-md-12 play">
             <div class="win-screen" :class="{'win': (game.winner === game.player_number)}" v-if="game.status === 4">
-                <h3 v-if="game.winner === game.player_number">You win! 🎉 🎉 🎉</h3>
-                <h3 v-if="game.winner !== game.player_number">You lose! 😭 😭 😭 </h3>
+                <h3 v-if="game.winner === 'You win!'">You win! 🎉 🎉 🎉</h3>
+                <h3 v-if="game.winner === 'You lose!'">You lose! 😭 😭 😭 </h3>
                 <a class="btn btn-primary" href="/home">Play again?</a>
             </div>
             <div v-else class="row">
