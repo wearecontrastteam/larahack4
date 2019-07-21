@@ -17,19 +17,27 @@
         <br>
 
         <div class="row">
-            <div class="col-sm-2"><h3>GH&nbsp;ID</h3></div>
+            <div class="col-sm-1"><h3>GH&nbsp;ID</h3></div>
             <div class="col-sm-1"><h3>Login</h3></div>
             <div class="col-sm-2"><h3>Name</h3></div>
-            <div class="col-sm-3"><h3>Avatar</h3></div>
-            <div class="col-sm-3"><h3>Bio</h3></div>
+            <div class="col-sm-2"><h3>Avatar</h3></div>
+            <div class="col-sm-4"><h3>Bio</h3></div>
+            <div class="col-sm-1"><h3>X</h3></div>
         </div>
     @foreach($people as $person)
         <div class="row">
-            <div class="col-sm-2">{{$person->github_id}}</div>
+            <div class="col-sm-1">{{$person->github_id}}</div>
             <div class="col-sm-1">{{$person->login}}</div>
             <div class="col-sm-2">{{$person->name}}</div>
-            <div class="col-sm-3"><img src="{{$person->avatar_url}}" width="200"></div>
-            <div class="col-sm-3">{{$person->bio}}</div>
+            <div class="col-sm-2"><img src="{{$person->avatar_url}}" width="75"></div>
+            <div class="col-sm-4">{{$person->bio}}</div>
+            <div class="col-sm-1">
+                <form action="{{route('admin.delete_person')}}" method="POST">
+                {{csrf_field()}}
+                <input type="hidden" class="form-control" name="github_id" value="{{$person->github_id}}">
+                <button type="submit" class="btn btn-danger form-control">Delete</button>
+                </form>
+            </div>
         </div>
     @endforeach
     </div>

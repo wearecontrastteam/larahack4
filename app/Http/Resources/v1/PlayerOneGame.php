@@ -26,7 +26,8 @@ class PlayerOneGame extends JsonResource
             'people' => $game->people,
             'state' => $game->player_one_state,
             'person' => $game->player_one_person,
-            'opponent' => optional($game->player_two)->name ?? 'Awaiting Opponent'
+            'opponent' => optional($game->player_two)->name ?? 'Awaiting Opponent',
+            'player' => 'player-1',
         ];
     }
 

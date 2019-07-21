@@ -1,5 +1,5 @@
 <template>
-    <div class="game-board">
+    <div class="game-board" :class="game.player">
         <template v-for="person in game.people">
             <tile :id="person.id" :avatar_url="person.avatar_url" :name="person.name" :bio="person.bio"></tile>
         </template>

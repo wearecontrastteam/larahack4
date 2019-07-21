@@ -1,0 +1,41 @@
+title Git Who?
+
+participant Player 1
+participant Player 2
+participant Server
+participant Pusher
+
+Player 1->Server: GET /game/create
+note over Server: creates game abc123 with Player 1
+Server->Player 1: redirect to /game/abc123
+Player 1->Server: GET /game/abc123
+Server->Player 1: {{game page}}
+Player 1->Server: GET /api/v1/game/abc123
+Server->Player 1: {{game JSON}}
+
+Player 2->Server: GET /game/abc123/join
+note over Server: updates game abc123 with Player 2
+Server->Player 2: redirect to /game/abc123
+Player 2->Server: GET /game/abc123
+Server->Player 2: {{game page}}
+Player 2->Server: GET /api/v1/game/abc123
+Server->Player 2: {{game JSON}}
+
+note over Player 1, Player 2, Server, Pusher: [pusher nudge update]
+
+note over Player 1, Server, Player 2: Game now in progress, P1's to ask
+
+Player 1->Server: POST /api/v1/game/abc123/ask_question
+note over Server: updates game abc123 state: P1 wait-for-answer
+Server->Pusher: question
+Pusher->Player 2: question
+Player 2->Server: answer "NO"
+note over Server: updates game abc123 state: P1 flip faces
+note over Player 1, Player 2, Server, Pusher: [pusher nudge update]
+Player 1->Server: flip faces and click Done
+note over Server: updates game abc123 state: P2's turn to ask
+note over Player 1, Player 2, Server, Pusher: [pusher nudge update]
+Player 2->Server: POST /api/v1/game/abc123/guess
+note over Server: updates game abc123 state: guess incorrect
+note over Server: updates game abc123 state: P1's turn to ask
+note over Player 1, Player 2, Server, Pusher: [pusher nudge update]

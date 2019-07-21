@@ -30,17 +30,42 @@ Route::middleware('auth')->group(function(){
 
         Route::get('/', 'AdminController@index')->name('index');
         Route::post('/add-person', 'AdminController@add_person')->name('add_person');
+        Route::post('/delete-person', 'AdminController@delete_person')->name('delete_person');
 
     });
 
-    Route::namespace('Api')->prefix('api')->name('api.')->group(function(){
-        Route::prefix('v1')->name('v1.')->namespace('v1')->group(function (){
-            Route::prefix('game/{game_hash}')->name('game.')->group(function(){
+
+    Route::namespace('Api')->prefix('api')->name('api.')->group(function() {
+        Route::prefix('v1')->name('v1.')->namespace('v1')->group(function () {
+            Route::prefix('game/{game_hash}')->name('game.')->group(function () {
                 Route::get('/', 'GameController@index')->name('index');
                 Route::post('/', 'GameController@update')->name('update');
                 Route::post('/guess', 'GameController@guess')->name('guess');
             });
         });
+    });
+
+    Route::get('pusher-example', function() {
+        return view('pusher-example');
+    });
+
+    Route::get('pusher-send', function() {
+        $pusher = new Pusher\Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            array('cluster' => env('PUSHER_APP_CLUSTER'))
+        );
+
+        $pusher->trigger('my-channel', 'game-updated', [
+            'message' => '1'
+        ]);
+
+        $pusher->trigger('my-channel', 'chat-message', [
+            'message' => 'Grey hair?'
+        ]);
+
+        return "OK";
     });
 
 });
