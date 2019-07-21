@@ -13,12 +13,27 @@
     export default {
         props: [
             'game',
-            'game_id'
+            'game_id',
+            'pusher'
         ],
         data() {
             return {
                 question: "",
             }
+        },
+        mounted(){
+            this.channel.bind('player-1-asks', function(data) {
+                console.log('A player-1-asks event was triggered with message: ' + data.message);
+            }.bind(this));
+            this.channel.bind('player-1-answers', function(data) {
+                console.log('A player-1-answers event was triggered with message: ' + data.message);
+            }.bind(this));
+            this.channel.bind('player-2-asks', function(data) {
+                console.log('A player-2-asks event was triggered with message: ' + data.message);
+            }.bind(this));
+            this.channel.bind('player-2-answers', function(data) {
+                console.log('A player-2-answers event was triggered with message: ' + data.message);
+            }.bind(this));
         },
         methods: {
             askQuestion: function () {
