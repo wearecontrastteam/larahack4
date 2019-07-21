@@ -47,6 +47,16 @@
                     return false
                 }
             }
+        },
+        computed: {
+            isEnabled: function() {
+                if ((this.game.currentPlayer === this.game.player_number) && (this.game.subturn===3)) {
+                    return true
+                }
+                else {
+                    return false
+                }
+            }
         }
     }
 </script>

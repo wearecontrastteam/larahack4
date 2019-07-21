@@ -96,11 +96,6 @@
                             if (this.game.state === null) {
                                 this.game.state = data.state;
                             }
-
-                            if (this.game.subturn === 1) {
-                                this.$set(this.game.question, 'query', '');
-                            }
-
                         }
 
                         console.log(this.game);

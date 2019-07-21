@@ -61,7 +61,6 @@
                 });
             },
             endTurn(){
-                this.$set(this.question, 'query', '');
                 axios.post('/api/v1/game/' + this.game_id + '/endturn');
             },
             setupPusher(){
@@ -94,6 +93,11 @@
             channel(value){
                 if(value !== null && this.pusherSetup === false){
                     this.setupPusher();
+                }
+            },
+            "game.subturn": function (val) {
+                if ( val === 1 )  {
+                    this.$set(this.question, 'query', '');
                 }
             }
         }
