@@ -24,8 +24,10 @@ class PlayerTwoGame extends JsonResource
             'id' => encrypt($game->id),
             'current_player' => $game->current_player,
             'people' => $game->people,
-            'player_two_state' => $game->player_two_state,
-            'player_two_person' => $game->player_two_person,
+            'state' => $game->player_two_state,
+            'person' => $game->player_two_person,
+            'opponent' => optional($game->player_one)->name,
+            'player' => 'player-2',
         ];
     }
 

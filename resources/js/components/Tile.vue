@@ -3,14 +3,14 @@
         <div class="shadow-tile" v-if="flipped" :id="id">
             <img :src="avatar_url" >
             <span class="name">{{name}}</span>
-            <span v-if="this.bio.length != 0" class="bio">{{bio}}</span>
+            <span v-if="showBio" class="bio">{{bio}}</span>
         </div>
-        <div class="tile" :class="{ flipped: flipped}" :id="id">
+        <div class="tile" :class="{ flipped: flipped }" :id="id">
             <img :src="avatar_url" >
             <span class="name">{{name}}</span>
-            <span v-if="this.bio.length != 0" class="bio">{{bio}}</span>
+            <span v-if="showBio" class="bio">{{bio}}</span>
         </div>
-        <label class="btn flip-button" :class="{ hide: flipped}">
+        <label class="btn flip-button" :class="{ hide: flipped }">
             <input type="checkbox" v-model="flipped">
 
             <i class="fa fa-undo" aria-hidden="true"></i>
@@ -23,6 +23,11 @@
         data() {
             return {
                 flipped: false,
+            }
+        },
+        computed:{
+            showBio(){
+                return this.bio && this.bio.length > 0;
             }
         }
     }

@@ -50,12 +50,12 @@ class Game extends Model
 
     public function player_one()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function player_two()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function status()
@@ -65,12 +65,12 @@ class Game extends Model
 
     public function player_one_person()
     {
-        return $this->hasOne(Person::class);
+        return $this->belongsTo(Person::class);
     }
 
     public function player_two_person()
     {
-        return $this->hasOne(Person::class);
+        return $this->belongsTo(Person::class);
     }
 
     public function winner()

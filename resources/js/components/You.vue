@@ -1,10 +1,9 @@
 <template>
-    <div class="you" :class="player_number">
-
+    <div class="you" :class="game.player">
         <div class="your-selection">
-            <img :src="avatar_url" >
-            <span class="name">{{name}}</span>
-            <span v-if="this.bio.length != 0" class="bio">{{bio}}</span>
+            <img :src="game.person.avatar_url" >
+            <span class="name">{{game.person.name}}</span>
+            <span v-if="hasBio" class="bio">{{game.person.bio}}</span>
         </div>
     </div>
 </template>
@@ -12,11 +11,11 @@
 
 <script>
     export default {
-        props: [
-            'avatar_url',
-            'name',
-            'bio',
-            'player_number'
-        ],
+        props: ['game'],
+        computed: {
+            hasBio(){
+                return this.game.person.bio && this.game.person.bio.length > 0;
+            }
+        }
     }
 </script>

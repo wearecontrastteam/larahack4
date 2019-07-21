@@ -24,8 +24,10 @@ class PlayerOneGame extends JsonResource
             'id' => encrypt($game->id),
             'current_player' => $game->current_player,
             'people' => $game->people,
-            'player_one_state' => $game->player_one_state,
-            'player_one_person' => $game->player_one_person,
+            'state' => $game->player_one_state,
+            'person' => $game->player_one_person,
+            'opponent' => optional($game->player_two)->name ?? 'Awaiting Opponent',
+            'player' => 'player-1',
         ];
     }
 
