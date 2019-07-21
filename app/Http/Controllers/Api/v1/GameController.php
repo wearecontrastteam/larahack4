@@ -101,4 +101,24 @@ class GameController extends Controller
         }
     }
 
+
+
+    public function ask(Game $game, Request $request)
+    {
+        $question = $request->get('question');
+
+        $pusher = new \Pusher\Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            array('cluster' => env('PUSHER_APP_CLUSTER'))
+        );
+
+        $channel = "game-" . sha1($game->id);
+
+        $pusher->trigger($channel, 'question', [
+            'message' => $question
+        ]);
+    }
+
 }
