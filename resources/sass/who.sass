@@ -4,6 +4,8 @@ $player-1-flip-colour: #E69008
 $player-2-colour: #CC312D
 $player-2-flip-colour: #13CC4E
 
+$turn-colour: #53ca56
+
 =shadow($level: 1, $background: black)
   @if $level == -1
     box-shadow: inset 0 1px 3px rgba(0,0,0,0.12), inset 0 1px 2px rgba($background,0.24)
@@ -147,12 +149,15 @@ $player-2-flip-colour: #13CC4E
       .fa
         transform: rotate(-45deg)
 .you
-  .your-selection
+  .is-turn
+    border: 1px solid darken($turn-colour, 30%)
+    border-radius: 4px
+    background: $turn-colour
+  .selection
       position: relative
-      width: 250px
       padding: 10px
       border-radius: 4px
-      margin: 15px auto
+      margin: 15px
       +shadow(2)
       img
         width: 100%
@@ -171,21 +176,26 @@ $player-2-flip-colour: #13CC4E
         border-radius: 4px
         padding: 4px 14px
   &.player-1
-    .your-selection
+    .selection
       background: $player-2-colour
       border: 1px solid darken($player-2-colour, 30%)
   &.player-2
-    .your-selection
+    .selection
       background: $player-1-colour
       border: 1px solid darken($player-1-colour, 30%)
 .opponent
   .selection
     position: relative
-    width: 250px
     padding: 10px
     border-radius: 4px
-    margin: 15px auto
+    margin: 15px
     +shadow(2)
+  .name
+    margin: 10px
+    text-align: center
+    font-size: 18px
+
+
   &.player-1
     .selection
       background: $player-1-colour
@@ -201,3 +211,20 @@ $player-2-flip-colour: #13CC4E
       .colour
         fill: $player-1-colour
         fill-rule: evenodd
+.opponent, .you
+  border: 1px solid #cccccc
+  border-radius: 4px
+  background: #e1e1e1
+  margin-bottom: 15px
+
+  .player-title
+    text-align: center
+    display: block
+    font-size: 20px
+    margin: 10px 0
+    line-height: 18px
+    font-weight: bold
+  &.is-turn
+    border: 1px solid darken($turn-colour, 30%)
+    border-radius: 4px
+    background: $turn-colour

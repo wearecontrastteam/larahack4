@@ -4,13 +4,12 @@
         <div class=" col-md-12 play">
             <div class="row">
                 <div class="col-md-3">
-                    <you :game="game"></you>
                     <opponent :game="game"></opponent>
+                    <you :game="game"></you>
                     <question :game="game" :game_id="gameId"></question>
                 </div>
                 <div class="col-md-9">
                     <tiles :game="game" @stateupdated="saveGameState"></tiles>
-
                 </div>
             </div>
         </div>
