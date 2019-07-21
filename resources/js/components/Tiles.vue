@@ -7,6 +7,7 @@
                   :bio="person.bio"
                   :state="getPersonState(person.id)"
                   @flipDownPerson="flipDownPerson"
+                  @flipUpPerson="flipUpPerson"
             ></tile>
         </template>
     </div>
@@ -23,6 +24,10 @@
             flipDownPerson(id){
                 this.game.state.find(e => e.id === id).state = 0;
 
+                this.$emit('stateupdated');
+            },
+            flipUpPerson(id){
+                this.game.state.find(e => e.id === id).state = 1;
                 this.$emit('stateupdated');
             }
         }
