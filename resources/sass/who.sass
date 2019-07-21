@@ -60,9 +60,8 @@ $player-2-flip-colour: #13CC4E
     margin: 10px
     position: relative
     flex: 1
-    min-width: 150px
-    max-width: 250px
-    flex-basis: calc(16.6% - 20px)
+    min-width: 100px
+    flex-basis: calc(12.5% - 20px)
     .shadow-tile
       width: calc(100% - 10px)
       height: calc(100% - 10px)
@@ -76,7 +75,7 @@ $player-2-flip-colour: #13CC4E
     .tile
       width: calc(100% - 10px)
       height: calc(100% - 10px)
-      padding: 10px
+      padding: 0px
       border-radius: 4px
       margin: 5px
       transition: transform .5s
@@ -89,12 +88,16 @@ $player-2-flip-colour: #13CC4E
     .tile, .shadow-tile
       img
         width: 100%
-        border-radius: 6px
+        border-radius: 4px
+        border-bottom-left-radius: 0
+        border-bottom-right-radius: 0
+
       .name
         display: block
         text-align: center
-        font-size: 20px
+        font-size: 13px
         margin-top: 10px
+        margin-bottom: 10px
         color: #ffffff
       .bio
         display: block
@@ -108,27 +111,27 @@ $player-2-flip-colour: #13CC4E
       top: 6px
       right: 6px
       color: #ffffff
-      width: 34px
-      height: 34px
+      padding: 0
+      width: 20px
+      height: 20px
       border-radius: 0
       border-top-right-radius: 4px
       cursor: pointer
       &:after
         content: " "
-        border-width: 17px
+        border-width: 10px
         border-style: solid
         position: absolute
         top: calc(100% + 1px)
         right: -1px
-        width: 0
-        height: 0
+
       &:before
         content: " "
-        border-width: 17px
+        border-width: 10px
         border-style: solid
         position: absolute
         top: -1px
-        left: calc(-100% + -3px )
+        left: calc(-100% - 3px)
         width: 0
         height: 0
       &.hide
