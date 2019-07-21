@@ -1,8 +1,11 @@
 <template>
-    <div class=" col-md-12 play">
-        <opponent :game="game"></opponent>
-        <tiles :game="game" @stateupdated="saveGameState"></tiles>
-        <you :game="game"></you>
+
+    <div class="container">
+        <div class=" col-md-12 play">
+            <opponent :game="game"></opponent>
+            <tiles :game="game" @stateupdated="saveGameState"></tiles>
+            <you :game="game"></you>
+        </div>
     </div>
 </template>
 
