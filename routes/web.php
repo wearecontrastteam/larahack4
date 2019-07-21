@@ -33,4 +33,27 @@ Route::middleware('auth')->group(function(){
 
     });
 
+    Route::get('pusher-example', function() {
+        return view('pusher-example');
+    });
+
+    Route::get('pusher-send', function() {
+        $pusher = new Pusher\Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            array('cluster' => env('PUSHER_APP_CLUSTER'))
+        );
+
+        $pusher->trigger('my-channel', 'game-updated', [
+            'message' => '1'
+        ]);
+
+        $pusher->trigger('my-channel', 'chat-message', [
+            'message' => 'Grey hair?'
+        ]);
+
+        return "OK";
+    });
+
 });

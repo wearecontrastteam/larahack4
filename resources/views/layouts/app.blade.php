@@ -18,6 +18,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 </head>
 <body>
     <div id="app">
@@ -76,5 +78,7 @@
             @yield('content')
         </main>
     </div>
+
+    @yield('scripts')
 </body>
 </html>
