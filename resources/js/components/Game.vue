@@ -2,10 +2,18 @@
 
     <div class="container">
         <div class=" col-md-12 play">
-            <opponent :game="game"></opponent>
-            <you :game="game"></you>
-            <tiles :game="game" @stateupdated="saveGameState"></tiles>
-            <question :game="game" :game_id="gameId"></question>
+            <div class="row">
+                <div class="col-md-3 players">
+                    <opponent :game="game"></opponent>
+                    <you :game="game"></you>
+                    <question :game="game" :game_id="gameId"></question>
+                    Player {{game.currentPlayer}}'s turn<br>
+                    Subturn: {{game.subturn}}<br>
+                </div>
+                <div class="col-md-9">
+                    <tiles :game="game" @stateupdated="saveGameState"></tiles>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -13,7 +21,7 @@
 <script>
     export default {
         name: "Game",
-        props: ['gameId'],
+        props: ['gameId', 'gameIdHashed'],
         data(){
             return {
                 game: {
@@ -27,17 +35,46 @@
                         bio: ''
                     },
                     state: null,
-                    player: ''
-                }
+                    player: '',
+                    subturn: null,
+                },
+                pusher: null,
+                channel: null
             };
         },
         mounted(){
             this.updateGameState();
+
+            this.initPusher();
         },
         computed: {
-
+            getPusherChannelName(){
+                return 'game-' + this.gameIdHashed;
+            }
         },
         methods: {
+            initPusher(){
+                this.pusher = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
+                    cluster: process.env.MIX_PUSHER_APP_CLUSTER
+                });
+
+                this.channel = this.pusher.subscribe(this.getPusherChannelName);
+                this.channel.bind('game-updated', function(data) {
+                    this.updateGameState();
+                }.bind(this));
+                this.channel.bind('player-1-asks', function(data) {
+                    console.log('A player-1-asks event was triggered with message: ' + data.message);
+                }.bind(this));
+                this.channel.bind('player-1-answers', function(data) {
+                    console.log('A player-1-answers event was triggered with message: ' + data.message);
+                }.bind(this));
+                this.channel.bind('player-2-asks', function(data) {
+                    console.log('A player-2-asks event was triggered with message: ' + data.message);
+                }.bind(this));
+                this.channel.bind('player-2-answers', function(data) {
+                    console.log('A player-2-answers event was triggered with message: ' + data.message);
+                }.bind(this));
+            },
             updateGameState(){
                 axios.get(this.getApiUrl())
                     .then(response => {
@@ -48,11 +85,15 @@
                             this.game.person = data.person;
                             this.game.opponent = data.opponent;
                             this.game.player = data.player;
+                            this.game.turn = data.turn;
+                            this.game.subturn = data.subturn;
 
                             if(this.game.state === null){
                                 this.game.state = data.state;
                             }
                         }
+
+                        console.log(this.game);
                     });
             },
             getApiUrl(url){

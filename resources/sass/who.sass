@@ -4,6 +4,8 @@ $player-1-flip-colour: #E69008
 $player-2-colour: #CC312D
 $player-2-flip-colour: #13CC4E
 
+$turn-colour: #53ca56
+
 =shadow($level: 1, $background: black)
   @if $level == -1
     box-shadow: inset 0 1px 3px rgba(0,0,0,0.12), inset 0 1px 2px rgba($background,0.24)
@@ -18,6 +20,10 @@ $player-2-flip-colour: #13CC4E
   @else if $level == 5
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba($background,0.22)
 
+.navbar
+  .navbar-brand
+    .logo
+      height: 30px
 
 .game-board
   display: flex
@@ -61,7 +67,7 @@ $player-2-flip-colour: #13CC4E
     position: relative
     flex: 1
     min-width: 100px
-    flex-basis: calc(12.5% - 20px)
+    flex-basis: calc(25% - 20px)
     .shadow-tile
       width: calc(100% - 10px)
       height: calc(100% - 10px)
@@ -71,7 +77,7 @@ $player-2-flip-colour: #13CC4E
       position: absolute
       img
         filter: grayscale(90%)
-        opacity: 0.9
+        opacity: 0.6
     .tile
       width: calc(100% - 10px)
       height: calc(100% - 10px)
@@ -134,8 +140,14 @@ $player-2-flip-colour: #13CC4E
         left: calc(-100% - 3px)
         width: 0
         height: 0
-      &.hide
-        display: none
+      &.flipped
+        background: #cccccc
+        &:after
+          border-color: #cccccc #cccccc transparent transparent
+        &:before
+          border-color: #cccccc #cccccc transparent transparent
+        .fa
+          transform: scaleX(-1)
       input
         position: absolute
         clip: rect(0,0,0,0)
@@ -143,12 +155,15 @@ $player-2-flip-colour: #13CC4E
       .fa
         transform: rotate(-45deg)
 .you
-  .your-selection
+  .is-turn
+    border: 1px solid darken($turn-colour, 30%)
+    border-radius: 4px
+    background: $turn-colour
+  .selection
       position: relative
-      width: 250px
       padding: 10px
       border-radius: 4px
-      margin: 15px auto
+      margin: 15px
       +shadow(2)
       img
         width: 100%
@@ -167,10 +182,73 @@ $player-2-flip-colour: #13CC4E
         border-radius: 4px
         padding: 4px 14px
   &.player-1
-    .your-selection
+    .selection
       background: $player-2-colour
       border: 1px solid darken($player-2-colour, 30%)
   &.player-2
-    .your-selection
+    .selection
       background: $player-1-colour
       border: 1px solid darken($player-1-colour, 30%)
+.opponent
+  .selection
+    position: relative
+    padding: 10px
+    border-radius: 4px
+    margin: 15px
+    +shadow(2)
+  .name
+    margin: 10px
+    text-align: center
+    font-size: 18px
+
+
+  &.player-1
+    .selection
+      background: $player-1-colour
+      border: 1px solid darken($player-1-colour, 30%)
+      .colour
+        fill: $player-2-colour
+        fill-rule: evenodd
+
+  &.player-2
+    .selection
+      background: $player-2-colour
+      border: 1px solid darken($player-2-colour, 30%)
+      .colour
+        fill: $player-1-colour
+        fill-rule: evenodd
+.opponent, .you
+  border: 1px solid #cccccc
+  border-radius: 4px
+  background: #e1e1e1
+  margin-bottom: 15px
+
+  .player-title
+    text-align: center
+    display: block
+    font-size: 20px
+    margin: 10px 0
+    line-height: 18px
+    font-weight: bold
+  &.is-turn
+    border: 1px solid darken($turn-colour, 30%)
+    border-radius: 4px
+    background: $turn-colour
+.players
+  display: flex
+  flex-wrap: wrap
+  .opponent, .you
+    margin: 15px
+    flex-basis: calc(50% - 30px)
+    flex-shrink: 1
+@media (min-width: 768px)
+  .players
+    display: block
+    .opponent, .you
+      width: 100%
+      margin: 0
+      margin-bottom: 15px
+@media (min-width: 1200px)
+  .game-board
+    .tile-slot
+      flex-basis: calc(12.5% - 20px)

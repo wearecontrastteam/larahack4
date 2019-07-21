@@ -1,6 +1,9 @@
 <template>
     <div class="you" :class="game.player">
-        <div class="your-selection">
+        <span class="player-title">
+            You
+        </span>
+        <div class="selection">
             <img :src="game.person.avatar_url" >
             <span class="name">{{game.person.name}}</span>
         </div>

@@ -19,13 +19,15 @@ class Game extends JsonResource
 
     public function format(\App\Game $game)
     {
+        $gameId = encrypt($game->id);
         return [
-            'id' => $game->id,
+            'id' => $gameId,
             'player_one' => $game->player_one->name,
             'player_two' => optional($game->player_two)->name,
             'status' => $game->status,
             'winner' => optional($game->winner)->name,
-            'created' => $game->created_at
+            'created' => $game->created_at,
+            'join_url' => route('game.join', $gameId)
         ];
     }
 
