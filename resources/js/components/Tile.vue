@@ -3,12 +3,10 @@
         <div class="shadow-tile" v-if="isFlippedDown" :id="id">
             <img :src="avatar_url" >
             <span class="name">{{name}}</span>
-            <span v-if="showBio" class="bio">{{bio}}</span>
         </div>
         <div class="tile" :class="{ flipped: isFlippedDown }" :id="id">
             <img :src="avatar_url" >
             <span class="name">{{name}}</span>
-            <span v-if="showBio" class="bio">{{bio}}</span>
         </div>
         <label class="btn flip-button" :class="{ hide: isFlippedDown }">
             <input type="checkbox" @click="flipDownPerson">
@@ -26,9 +24,6 @@
             }
         },
         computed:{
-            showBio(){
-                return this.bio && this.bio.length > 0;
-            },
             isFlippedDown(){
                 return this.state === 0;
             }
