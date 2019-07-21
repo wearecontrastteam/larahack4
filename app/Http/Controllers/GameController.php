@@ -58,7 +58,8 @@ class GameController extends Controller
         }
 
         return view('game.play')
-            ->with('game_id', encrypt($game->id));
+            ->with('game_id', encrypt($game->id))
+            ->with('game_id_hashed', sha1($game->id));
     }
 
     public function invalid()
