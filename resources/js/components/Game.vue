@@ -18,10 +18,7 @@
                               @enableguess="enableGuess"
                               @disableGuessing="disableGuessing"
                     ></question>
-                    <template v-if="game.status == 4")>
-                        <h3 v-if="game.winner == game.player_number">You win!</h3>
-                        <h3 v-if="game.winner != game.player_number">You lose!</h3>
-                    </template>
+                    <h3>{{game.winner}}</h3>
                 </div>
                 <div class="col-md-9">
                     <tiles :game-id="gameId" :game="game" :isGuessing="isGuessing" @stateupdated="saveGameState"></tiles>

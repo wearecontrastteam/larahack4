@@ -15,7 +15,7 @@
 </template>
 <script>
     export default {
-        props: ['id','avatar_url','name','bio','state', 'gameId', 'isGuessing', 'enabled],
+        props: ['id','avatar_url','name','bio','state', 'gameId', 'isGuessing', 'enabled'],
         data() {
             return {
                 flipped: false,
