@@ -22,7 +22,7 @@
 <script>
     export default {
         name: "Game",
-        props: ['gameId'],
+        props: ['gameId', 'gameIdHashed'],
         data(){
             return {
                 game: {
@@ -38,16 +38,44 @@
                     state: null,
                     player: '',
                     subturn: null,
-                }
+                },
+                pusher: null,
+                channel: null
             };
         },
         mounted(){
             this.updateGameState();
+
+            this.initPusher();
         },
         computed: {
-
+            getPusherChannelName(){
+                return 'game-' + this.gameIdHashed;
+            }
         },
         methods: {
+            initPusher(){
+                this.pusher = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
+                    cluster: process.env.MIX_PUSHER_APP_CLUSTER
+                });
+
+                this.channel = this.pusher.subscribe(this.getPusherChannelName);
+                this.channel.bind('game-updated', function(data) {
+                    this.updateGameState();
+                }.bind(this));
+                this.channel.bind('player-1-asks', function(data) {
+                    console.log('A player-1-asks event was triggered with message: ' + data.message);
+                }.bind(this));
+                this.channel.bind('player-1-answers', function(data) {
+                    console.log('A player-1-answers event was triggered with message: ' + data.message);
+                }.bind(this));
+                this.channel.bind('player-2-asks', function(data) {
+                    console.log('A player-2-asks event was triggered with message: ' + data.message);
+                }.bind(this));
+                this.channel.bind('player-2-answers', function(data) {
+                    console.log('A player-2-answers event was triggered with message: ' + data.message);
+                }.bind(this));
+            },
             updateGameState(){
                 axios.get(this.getApiUrl())
                     .then(response => {
