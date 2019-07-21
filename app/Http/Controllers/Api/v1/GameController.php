@@ -101,8 +101,6 @@ class GameController extends Controller
         }
     }
 
-
-
     public function ask(Game $game, Request $request)
     {
         $question = $request->get('question');
@@ -135,4 +133,35 @@ class GameController extends Controller
         ]);
     }
 
+    public function answer(Game $game, Request $request)
+    {
+        $question = $request->get('question');
+
+        $pusher = new \Pusher\Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            array('cluster' => env('PUSHER_APP_CLUSTER'))
+        );
+
+        $channel = "game-" . sha1($game->id . env('CHAT_HASH_SECRET'));
+
+        $player = null;
+
+        if($game->isPlayerOne(auth()->id())) {
+            $player = 1;
+        }
+
+        if($game->isPlayerTwo(auth()->id())) {
+            $player = 2;
+        }
+
+        $pusher->trigger($channel, "player-$player-answers", [
+            'message' => $question
+        ]);
+
+        $pusher->trigger($channel, 'game-updated', [
+            'message' => 1
+        ]);
+    }
 }

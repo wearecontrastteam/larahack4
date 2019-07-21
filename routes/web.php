@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function(){
                 Route::get('/', 'GameController@index')->name('index');
                 Route::post('/', 'GameController@update')->name('update');
                 Route::post('/ask', 'GameController@ask')->name('ask');
+                Route::post('/answer', 'GameController@answer')->name('ask');
                 Route::post('/guess', 'GameController@guess')->name('guess');
             });
         });
