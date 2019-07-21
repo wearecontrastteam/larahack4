@@ -35,4 +35,20 @@ class AdminController extends Controller
         return redirect('/admin');
 
     }
+
+    public function delete_person(Request $request)
+    {
+        // TODO change this to a middleware
+        if(!in_array(Auth::user()->id, [1,2,3])) {
+            abort(403);
+        }
+
+        $person = Person::where([
+            'github_id' => $request->get('github_id')
+        ])->get();
+
+        $person[0]->delete();
+
+        return redirect('/admin');
+    }
 }
