@@ -114,7 +114,7 @@ class GameController extends Controller
             array('cluster' => env('PUSHER_APP_CLUSTER'))
         );
 
-        $channel = "game-" . sha1($game->id);
+        $channel = "game-" . sha1($game->id . env('CHAT_HASH_SECRET'));
 
         $pusher->trigger($channel, 'question', [
             'message' => $question
