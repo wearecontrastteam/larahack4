@@ -13,8 +13,11 @@
         channel.bind('game-updated', function(data) {
             console.log('A game-updated event was triggered with message: ' + data.message);
         });
-        channel.bind('question', function(data) {
-            console.log('A question event was triggered with message: ' + data.message);
+        channel.bind('player-1-asks', function(data) {
+            console.log('A player-1-asks event was triggered with message: ' + data.message);
+        });
+        channel.bind('player-2-asks', function(data) {
+            console.log('A player-2-asks event was triggered with message: ' + data.message);
         });
 
         // Ask

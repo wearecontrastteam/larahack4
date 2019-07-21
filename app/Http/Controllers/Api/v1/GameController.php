@@ -116,8 +116,22 @@ class GameController extends Controller
 
         $channel = "game-" . sha1($game->id . env('CHAT_HASH_SECRET'));
 
-        $pusher->trigger($channel, 'question', [
+        $player = null;
+
+        if($game->isPlayerOne(auth()->id())) {
+            $player = 1;
+        }
+
+        if($game->isPlayerTwo(auth()->id())) {
+            $player = 2;
+        }
+
+        $pusher->trigger($channel, "player-$player-asks", [
             'message' => $question
+        ]);
+
+        $pusher->trigger($channel, 'game-updated', [
+            'message' => 1
         ]);
     }
 
