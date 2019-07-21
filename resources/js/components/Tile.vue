@@ -27,7 +27,8 @@
         },
         computed:{
             showBio(){
-                return this.bio && this.bio.length > 0;
+                return false
+                // return this.bio && this.bio.length > 0;
             }
         }
     }
