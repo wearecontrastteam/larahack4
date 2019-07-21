@@ -11,7 +11,6 @@
                         <h3 v-if="game.winner == game.player_number">You win!</h3>
                         <h3 v-if="game.winner != game.player_number">You lose!</h3>
                     </template>
-                    Subturn: {{game.subturn}}<br>
                 </div>
                 <div class="col-md-9">
                     <tiles :game-id="gameId" :game="game" @stateupdated="saveGameState"></tiles>
