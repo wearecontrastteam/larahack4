@@ -23,14 +23,14 @@ Server->Player 2: {{game JSON}}
 
 note over Player 1, Player 2, Server, Pusher: [pusher nudge update]
 
-note over Player 1, Server, Player 2: Game now in progress, P1's turn to ask
+note over Player 1, Server, Player 2: Game now in progress, P1's to ask
 
 Player 1->Server: POST /api/v1/game/abc123/ask_question
-note over Server: updates game abc123 state: P2 answer
+note over Server: updates game abc123 state: P1 wait-for-answer
 Server->Pusher: question
 Pusher->Player 2: question
 Player 2->Server: answer "NO"
-note over Server: updates game abc123 state: P1 answered
+note over Server: updates game abc123 state: P1 flip faces
 note over Player 1, Player 2, Server, Pusher: [pusher nudge update]
 Player 1->Server: flip faces and click Done
 note over Server: updates game abc123 state: P2's turn to ask
