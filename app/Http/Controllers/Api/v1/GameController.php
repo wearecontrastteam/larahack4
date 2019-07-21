@@ -86,22 +86,39 @@ class GameController extends Controller
 
     public function guess(Request $request, Game $game)
     {
-        if(!$game->isPlayer()){
+        $pusher = new Pusher(
+            config('services.pusher.app_key'),
+            config('services.pusher.app_secret'),
+            config('services.pusher.app_id'),
+            array('cluster' => config('services.pusher.app_cluster'))
+        );
+
+        $channel = "game-" . sha1($game->id . config('app.chat_hash_secret'));
+
+        if(!$game->isPlayer(auth()->id())) {
             return ['status' => 'error', 'error' => 'You are not a player in this game'];
         }
 
-        if($game->isPlayerOne(auth()->id())){
+        if($game->status_id == GameStatus::FINISHED) {
+            return new Response("The game has finished", 403);
+        }
+
+        if($game->isPlayerOne(auth()->id())) {
             if($game->current_player !== 1){
                 return ['status' => 'error', 'error' => 'You must wait until your turn to guess'];
             }
 
-            if($game->player_two_person_id === decrypt($request->input('person_id'))){
-                $game->winner_id = $game->player_one_id;
+            if($game->player_two_person_id === $request->input('person_id')){
+                $game->winner_id = 1;
                 $game->status_id = GameStatus::FINISHED;
                 $game->save();
 
+                $pusher->trigger($channel, 'game-updated', []);
                 return ['status' => 'ok', 'data' => [ 'result' => true ]];
             } else {
+                $game->subturn_id = GameSubturn::FLIP_FACES;
+                $game->save();
+                $pusher->trigger($channel, 'game-updated', []);
                 return ['status' => 'ok', 'data' => [ 'result' => false ]];
             }
         }
@@ -111,13 +128,17 @@ class GameController extends Controller
                 return ['status' => 'error', 'error' => 'You must wait until your turn to guess'];
             }
 
-            if($game->player_one_person_id === decrypt($request->input('person_id'))){
-                $game->winner_id = $game->player_two_id;
+            if($game->player_one_person_id === $request->input('person_id')){
+                $game->winner_id = 2;
                 $game->status_id = GameStatus::FINISHED;
                 $game->save();
 
+                $pusher->trigger($channel, 'game-updated', []);
                 return ['status' => 'ok', 'data' => [ 'result' => true ]];
             } else {
+                $game->subturn_id = GameSubturn::FLIP_FACES;
+                $game->save();
+                $pusher->trigger($channel, 'game-updated', []);
                 return ['status' => 'ok', 'data' => [ 'result' => false ]];
             }
         }
@@ -145,6 +166,10 @@ class GameController extends Controller
 
         if($game->isPlayerTwo(auth()->id())) {
             $player = 2;
+        }
+
+        if($game->status_id == GameStatus::FINISHED) {
+            return new Response("The game has finished", 403);
         }
 
         if($player != $game->current_player) {
@@ -189,6 +214,10 @@ class GameController extends Controller
             $player = 2;
         }
 
+        if($game->status_id == GameStatus::FINISHED) {
+            return new Response("The game has finished", 403);
+        }
+
         if($player == $game->current_player) {
             return new Response("Not your turn", 403);
         }
@@ -227,6 +256,10 @@ class GameController extends Controller
 
         if($game->isPlayerTwo(auth()->id())) {
             $player = 2;
+        }
+
+        if($game->status_id == GameStatus::FINISHED) {
+            return new Response("The game has finished", 403);
         }
 
         if($player !== $game->current_player) {

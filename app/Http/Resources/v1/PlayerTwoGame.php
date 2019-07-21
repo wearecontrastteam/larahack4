@@ -30,6 +30,8 @@ class PlayerTwoGame extends JsonResource
             'player' => 'player-2',
             'player_number' => 2,
             'subturn' => $game->subturn_id,
+            'status' => $game->status_id,
+            'winner' => $game->winner_id,
         ];
     }
 

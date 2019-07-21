@@ -7,9 +7,14 @@
                     <opponent :game="game"></opponent>
                     <you :game="game"></you>
                     <question :game="game" :game_id="gameId" :channel="channel"></question>
+                    <template v-if="game.status == 4")>
+                        <h3 v-if="game.winner == game.player_number">You win!</h3>
+                        <h3 v-if="game.winner != game.player_number">You lose!</h3>
+                    </template>
+                    Subturn: {{game.subturn}}<br>
                 </div>
                 <div class="col-md-9">
-                    <tiles :game="game" @stateupdated="saveGameState"></tiles>
+                    <tiles :game-id="gameId" :game="game" @stateupdated="saveGameState"></tiles>
                 </div>
             </div>
         </div>
@@ -35,7 +40,9 @@
                     state: null,
                     player: '',
                     player_number: '',
+                    status: null,
                     subturn: null,
+                    winner: null,
                 },
                 pusher: null,
                 channel: null
@@ -75,6 +82,8 @@
                             this.game.player_number = data.player_number;
                             this.game.turn = data.turn;
                             this.game.subturn = data.subturn;
+                            this.game.status = data.status;
+                            this.game.winner = data.winner;
 
                             if(this.game.state === null){
                                 this.game.state = data.state;
