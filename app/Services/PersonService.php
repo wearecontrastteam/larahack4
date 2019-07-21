@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Person;
 use Exception;
 use GuzzleHttp\Client;
+use Illuminate\Support\Str;
 
 class PersonService
 {
@@ -18,9 +19,14 @@ class PersonService
             );
             $response_contents = json_decode($res->getBody()->getContents(), true);
 
+            $name = $response_contents['name'];
+            if($name === '' || $name === null){
+                $name = $response_contents['login'];
+            }
+
             Person::updateOrCreate([
                 'login' => $response_contents['login'],
-                'name' => $response_contents['name'],
+                'name' => $name,
                 'avatar_url' => $response_contents['avatar_url'],
                 'bio' => $response_contents['bio'],
                 'github_id' => $response_contents['id'],
