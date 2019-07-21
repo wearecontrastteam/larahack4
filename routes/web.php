@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function(){
                 Route::post('/ask', 'GameController@ask')->name('ask');
                 Route::post('/answer', 'GameController@answer')->name('ask');
                 Route::post('/guess', 'GameController@guess')->name('guess');
+                Route::post('/endturn', 'GameController@endturn')->name('endturn');
             });
         });
     });

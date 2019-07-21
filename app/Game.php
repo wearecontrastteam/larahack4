@@ -90,14 +90,25 @@ class Game extends Model
             || $this->player_two_id === $id;
     }
 
-    public function isPlayerOne(int $id)
+    public function isPlayerOne(int $id = null)
     {
+        if($id === null){
+            $id = auth()->id();
+        }
         return $id === $this->player_one_id;
     }
 
-    public function isPlayerTwo(int $id)
+    public function isPlayerTwo(int $id = null)
     {
+        if($id === null){
+            $id = auth()->id();
+        }
         return $id === $this->player_two_id;
+    }
+
+    public function switchPlayer()
+    {
+        $this->current_player = $this->isPlayerOne() ? 2 : 1;
     }
 
 }
