@@ -8,7 +8,7 @@
             <img :src="avatar_url" >
             <span class="name">{{name}}</span>
         </div>
-        <label class="btn flip-button" :class="{ hide: isFlippedDown }">
+        <label class="btn flip-button" :class="{ flipped: isFlippedDown }">
             <input type="checkbox" @click="flipDownPerson">
 
             <i class="fa fa-undo" aria-hidden="true"></i>
