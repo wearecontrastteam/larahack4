@@ -2,22 +2,40 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
+            <a class="btn btn-primary" href="/game/create"> Create New Game</a>
+        </div>
+        <div class="col-md-4">
+            <div class="lobby">
+                <h3>Find Games</h3>
+                <table class="table">
+                    <tr>
+                        <th class="game-host">
+                            Game Host
+                        </th>
+                        <th class="created-at">
+                            Created At
+                        </th>
+                        <th>
+                    </tr>
+                    <tr>
+                        <td>
+                            Mikeaag
+                        </td>
+                        <td>
+                            {{date("H:i:s d-m-Y")}}
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="#">
+                                Join
+                            </a>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
+
     </div>
 </div>
 @endsection
