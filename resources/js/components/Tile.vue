@@ -9,14 +9,14 @@
             <span class="name">{{name}}</span>
             <button class="btn btn-primary btn-block mt-1" @click="guessPerson()">Guess</button>
         </div>
-        <div @click="togglePerson" class="btn flip-button" :class="{ flipped: isFlippedDown }">
+        <div v-if="enabled" @click="togglePerson" class="btn flip-button" :class="{ flipped: isFlippedDown }">
             <i class="fa fa-undo" aria-hidden="true"></i>
         </div>
     </div>
 </template>
 <script>
     export default {
-        props: ['id','avatar_url','name','bio','state', 'gameId'],
+        props: ['id','avatar_url','name','bio','state', 'gameId', 'enabled'],
         data() {
             return {
                 flipped: false,

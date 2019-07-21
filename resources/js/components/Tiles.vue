@@ -9,6 +9,7 @@
                   :gameId="gameId"
                   @flipDownPerson="flipDownPerson"
                   @flipUpPerson="flipUpPerson"
+                  :enabled="isEnabled"
             ></tile>
         </template>
     </div>
@@ -30,6 +31,16 @@
             flipUpPerson(id){
                 this.game.state.find(e => e.id === id).state = 1;
                 this.$emit('stateupdated');
+            }
+        },
+        computed: {
+            isEnabled: function() {
+                if ((this.game.currentPlayer === this.game.player_number) && (this.game.subturn===3)) {
+                    return true
+                }
+                else {
+                    return false
+                }
             }
         }
     }
