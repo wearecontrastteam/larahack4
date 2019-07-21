@@ -1,8 +1,10 @@
 <template>
     <div class="question form-group">
         <div class="asking" v-if="(game.currentPlayer === game.player_number) && (game.subturn===1)" >
-            <input class="form-control" type="text" v-model="question.query" placeholder="Your Question" />
-            <button class="btn btn-primary btn-block mt-1" @click="askQuestion()">Ask</button>
+            <input class="form-control" type="text" v-model="question.query" placeholder="Your Question" v-if="!isGuessing"/>
+            <button class="btn btn-primary btn-block mt-1" @click="askQuestion()" v-if="!isGuessing">Ask</button>
+            <button class="btn btn-success btn-block mt-1" @click="guess()" v-if="!isGuessing">Make a Guess</button>
+            <button class="btn btn-success btn-block mt-1" @click="disableGuessing()" v-if="isGuessing">Ask a question instead</button>
         </div>
         <div class="chat" v-if="(game.subturn > 1)">
                 <span class="question" :class="[question.asker, {'asking': (question.asker == game.player) }]">
@@ -29,7 +31,8 @@
         props: [
             'game',
             'game_id',
-            'channel'
+            'channel',
+            'isGuessing'
         ],
         data() {
             return {
@@ -79,6 +82,12 @@
                     this.$set(this, 'answer', data.message);
                 }.bind(this));
                 this.pusherSetup = true;
+            },
+            guess(){
+                this.$emit('enableguess');
+            },
+            disableGuessing(){
+                this.$emit('disableGuessing');
             }
         },
         watch: {
