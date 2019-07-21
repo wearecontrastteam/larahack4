@@ -45,8 +45,8 @@ class GameController extends Controller
     private function updatePlayerOne(Request $request, Game $game)
     {
         // TODO: Add validation
-        $game->current_player = $request->input('current_player');
-        $game->player_one_state = $request->input('player_one_state');
+//        $game->current_player = $request->input('current_player');
+        $game->player_one_state = $request->input('state');
         $game->save();
 
         return new PlayerOneGame($game);
@@ -55,8 +55,8 @@ class GameController extends Controller
     private function updatePlayerTwo(Request $request, Game $game)
     {
         // TODO: Add validation
-        $game->current_player = $request->input('current_player');
-        $game->player_two_state = $request->input('player_two_state');
+//        $game->current_player = $request->input('current_player');
+        $game->player_two_state = $request->input('state');
         $game->save();
 
         return new PlayerTwoGame($game);
