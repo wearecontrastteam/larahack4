@@ -8,14 +8,14 @@
             <img :src="avatar_url" >
             <span class="name">{{name}}</span>
         </div>
-        <div @click="togglePerson" class="btn flip-button" :class="{ flipped: isFlippedDown }">
+        <div v-if="enabled" @click="togglePerson" class="btn flip-button" :class="{ flipped: isFlippedDown }">
             <i class="fa fa-undo" aria-hidden="true"></i>
         </div>
     </div>
 </template>
 <script>
     export default {
-        props: ['id','avatar_url','name','bio','state', 'gameId', 'isGuessing'],
+        props: ['id','avatar_url','name','bio','state', 'gameId', 'isGuessing', 'enabled],
         data() {
             return {
                 flipped: false,

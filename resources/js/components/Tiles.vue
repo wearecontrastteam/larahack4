@@ -8,6 +8,7 @@
                   :state="getPersonState(person.id)"
                   :gameId="gameId"
                   :isGuessing="isGuessing"
+                  :enabled="isEnabled"
                   @flipDownPerson="flipDownPerson"
                   @flipUpPerson="flipUpPerson"
                   @disableGuessing="disableGuessing"
@@ -35,6 +36,16 @@
             },
             disableGuessing(){
                 this.$emit('disableGuessing');
+            }
+        },
+        computed: {
+            isEnabled: function() {
+                if ((this.game.currentPlayer === this.game.player_number) && (this.game.subturn===3)) {
+                    return true
+                }
+                else {
+                    return false
+                }
             }
         }
     }
