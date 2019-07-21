@@ -15,7 +15,7 @@
                 <td>{{ game.created }}</td>
                 <td>
                     <a class="btn btn-primary" :href="game.join_url">
-                        Join
+                        Play
                     </a>
                 </td>
             </tr>
