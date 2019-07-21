@@ -11,10 +11,20 @@
                 <div class="col-md-3 players">
                     <opponent :game="game"></opponent>
                     <you :game="game"></you>
-                    <question :game="game" :game_id="gameId" :channel="channel"></question>
+                    <question :game="game"
+                              :game_id="gameId"
+                              :channel="channel"
+                              :isGuessing="isGuessing"
+                              @enableguess="enableGuess"
+                              @disableGuessing="disableGuessing"
+                    ></question>
+                    <template v-if="game.status == 4")>
+                        <h3 v-if="game.winner == game.player_number">You win!</h3>
+                        <h3 v-if="game.winner != game.player_number">You lose!</h3>
+                    </template>
                 </div>
                 <div class="col-md-9">
-                    <tiles :game-id="gameId" :game="game" @stateupdated="saveGameState"></tiles>
+                    <tiles :game-id="gameId" :game="game" :isGuessing="isGuessing" @stateupdated="saveGameState"></tiles>
                 </div>
             </div>
         </div>
@@ -45,7 +55,8 @@
                     winner: null,
                 },
                 pusher: null,
-                channel: null
+                channel: null,
+                isGuessing: false,
             };
         },
         mounted(){
@@ -116,6 +127,13 @@
                 return {
                     state: this.game.state
                 };
+            },
+            enableGuess(){
+                console.log('enable guess');
+                this.isGuessing = true;
+            },
+            disableGuessing(){
+                this.isGuessing = false;
             }
         }
     }

@@ -7,9 +7,11 @@
                   :bio="person.bio"
                   :state="getPersonState(person.id)"
                   :gameId="gameId"
+                  :isGuessing="isGuessing"
+                  :enabled="isEnabled"
                   @flipDownPerson="flipDownPerson"
                   @flipUpPerson="flipUpPerson"
-                  :enabled="isEnabled"
+                  @disableGuessing="disableGuessing"
             ></tile>
         </template>
     </div>
@@ -18,7 +20,7 @@
 
 <script>
     export default {
-        props: ['gameId', 'game'],
+        props: ['gameId', 'game', 'isGuessing'],
         methods:{
             getPersonState(id){
                 return this.game.state.find(e => e.id === id).state;
@@ -31,6 +33,9 @@
             flipUpPerson(id){
                 this.game.state.find(e => e.id === id).state = 1;
                 this.$emit('stateupdated');
+            },
+            disableGuessing(){
+                this.$emit('disableGuessing');
             }
         },
         computed: {
