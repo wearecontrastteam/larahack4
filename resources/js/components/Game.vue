@@ -6,7 +6,7 @@
                 <div class="col-md-3 players">
                     <opponent :game="game"></opponent>
                     <you :game="game"></you>
-                    <question :game="game" :game_id="gameId" :pusher="pusher"></question>
+                    <question :game="game" :game_id="gameId" :channel="channel"></question>
                 </div>
                 <div class="col-md-9">
                     <tiles :game="game" @stateupdated="saveGameState"></tiles>
