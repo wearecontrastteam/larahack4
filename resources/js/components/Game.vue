@@ -3,7 +3,7 @@
     <div class="container">
         <div class=" col-md-12 play">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 players">
                     <opponent :game="game"></opponent>
                     <you :game="game"></you>
                     <question :game="game" :game_id="gameId"></question>
@@ -36,6 +36,7 @@
                     },
                     state: null,
                     player: '',
+                    player_number: '',
                     subturn: null,
                 },
                 pusher: null,
@@ -85,6 +86,7 @@
                             this.game.person = data.person;
                             this.game.opponent = data.opponent;
                             this.game.player = data.player;
+                            this.game.player_number = data.player_number;
                             this.game.turn = data.turn;
                             this.game.subturn = data.subturn;
 

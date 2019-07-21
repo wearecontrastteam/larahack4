@@ -8,11 +8,9 @@
             <img :src="avatar_url" >
             <span class="name">{{name}}</span>
         </div>
-        <label class="btn flip-button" :class="{ hide: isFlippedDown }">
-            <input type="checkbox" @click="flipDownPerson">
-
+        <div @click="togglePerson" class="btn flip-button" :class="{ flipped: isFlippedDown }">
             <i class="fa fa-undo" aria-hidden="true"></i>
-        </label>
+        </div>
     </div>
 </template>
 <script>
@@ -29,8 +27,12 @@
             }
         },
         methods:{
-            flipDownPerson(){
-                this.$emit('flipDownPerson', this.id);
+            togglePerson(){
+                if(this.isFlippedDown){
+                    this.$emit('flipUpPerson', this.id);
+                } else {
+                    this.$emit('flipDownPerson', this.id);
+                }
             }
         }
     }
