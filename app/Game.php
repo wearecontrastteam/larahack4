@@ -61,7 +61,7 @@ class Game extends Model
 
     public function status()
     {
-        return $this->hasOne(GameStatus::class);
+        return $this->belongsTo(GameStatus::class);
     }
 
     public function player_one_person()
@@ -76,7 +76,7 @@ class Game extends Model
 
     public function winner()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function isAwaitingOpponent()

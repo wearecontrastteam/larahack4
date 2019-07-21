@@ -17,7 +17,7 @@ class Game extends JsonResource
         return $this->format($this->resource);
     }
 
-    public function format(Game $game)
+    public function format(\App\Game $game)
     {
         return [
             'id' => $game->id,
@@ -25,6 +25,7 @@ class Game extends JsonResource
             'player_two' => optional($game->player_two)->name,
             'status' => $game->status,
             'winner' => optional($game->winner)->name,
+            'created' => $game->created_at
         ];
     }
 
