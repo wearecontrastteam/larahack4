@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function(){
 
         Route::get('/', 'AdminController@index')->name('index');
         Route::post('/add-person', 'AdminController@add_person')->name('add_person');
+        Route::post('/delete-person', 'AdminController@delete_person')->name('delete_person');
 
     });
 
