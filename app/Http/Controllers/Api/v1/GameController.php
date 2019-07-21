@@ -175,6 +175,7 @@ class GameController extends Controller
             config('services.pusher.app_secret'),
             config('services.pusher.app_id'),
             array('cluster' => config('services.pusher.app_cluster'))
+        );
 
         $channel = "game-" . sha1($game->id . config('app.chat_hash_secret'));
 
