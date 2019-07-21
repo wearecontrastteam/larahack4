@@ -1,10 +1,14 @@
 <template>
     <div class="question form-group">
-        <input class="form-control" type="text" v-model="question" placeholder="Your Question" />
-        <button class="btn btn-primary btn-block mt-1" @click="askQuestion()">Ask</button>
-        <button class="btn btn-primary btn-block mt-1" @click="answerQuestion('yes')">Yes</button>
-        <button class="btn btn-primary btn-block mt-1" @click="answerQuestion('no')">No</button>
-        <button class="btn btn-primary btn-block mt-1" @click="endTurn()">End Turn</button>
+        <div class="asking" v-if="(game.currentPlayer === game.player_number) && (game.subturn===1)" >
+            <input class="form-control" type="text" v-model="question" placeholder="Your Question" />
+            <button class="btn btn-primary btn-block mt-1" @click="askQuestion()">Ask</button>
+        </div>
+        <div class="answering" v-if="(game.currentPlayer !== game.player_number) && (game.subturn===2)" >
+            <button class="btn btn-primary btn-block mt-1" @click="answerQuestion('yes')">Yes</button>
+            <button class="btn btn-primary btn-block mt-1" @click="answerQuestion('no')">No</button>
+        </div>
+        <button v-if="(game.currentPlayer === game.player_number) && (game.subturn===3)" class="btn btn-primary btn-block mt-1" @click="endTurn()">End Turn</button>
 
     </div>
 </template>
