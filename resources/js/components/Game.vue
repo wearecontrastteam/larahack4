@@ -3,6 +3,8 @@
     <div class="container">
         <div class=" col-md-12 play">
             <opponent :game="game"></opponent>
+            Player {{game.currentPlayer}}'s turn<br>
+            Subturn: {{game.subturn}}<br>
             <you :game="game"></you>
             <tiles :game="game" @stateupdated="saveGameState"></tiles>
             <question :game="game" :game_id="gameId"></question>
@@ -27,7 +29,8 @@
                         bio: ''
                     },
                     state: null,
-                    player: ''
+                    player: '',
+                    subturn: null,
                 }
             };
         },
@@ -48,11 +51,15 @@
                             this.game.person = data.person;
                             this.game.opponent = data.opponent;
                             this.game.player = data.player;
+                            this.game.turn = data.turn;
+                            this.game.subturn = data.subturn;
 
                             if(this.game.state === null){
                                 this.game.state = data.state;
                             }
                         }
+
+                        console.log(this.game);
                     });
             },
             getApiUrl(url){

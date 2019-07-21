@@ -16,16 +16,30 @@
         channel.bind('player-1-asks', function(data) {
             console.log('A player-1-asks event was triggered with message: ' + data.message);
         });
+        channel.bind('player-1-answers', function(data) {
+            console.log('A player-1-answers event was triggered with message: ' + data.message);
+        });
         channel.bind('player-2-asks', function(data) {
             console.log('A player-2-asks event was triggered with message: ' + data.message);
+        });
+        channel.bind('player-2-answers', function(data) {
+            console.log('A player-2-answers event was triggered with message: ' + data.message);
         });
 
         // Ask
 
         function ask(question) {
-            console.log(question);
+            //console.log(question);
             axios.post('/api/v1/game/{{$game_id}}/ask', {
-                'game_id_hashed': '{{$game_id_hashed}}',
+                'question': question
+            })
+
+
+        }
+
+        function answer(question) {
+            //console.log(question);
+            axios.post('/api/v1/game/{{$game_id}}/answer', {
                 'question': question
             })
         }

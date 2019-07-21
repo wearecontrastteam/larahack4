@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Game;
 use App\GameStatus;
+use App\GameSubturn;
 use App\Http\Resources\v1\PlayerOneGame;
 use App\Http\Resources\v1\PlayerTwoGame;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 
 class GameController extends Controller
 {
@@ -143,6 +145,18 @@ class GameController extends Controller
             $player = 2;
         }
 
+        if($player != $game->current_player) {
+            return new Response("Not your turn", 403);
+        }
+
+        if($game->subturn_id != GameSubturn::ASK_QUESTION) {
+            return new Response("It's not time to ask questions", 403);
+        }
+
+        $game->subturn_id = GameSubturn::WAIT_FOR_QUESTION_ANSWER;
+
+        $game->save();
+
         $pusher->trigger($channel, "player-$player-asks", [
             'message' => $question
         ]);
@@ -174,6 +188,17 @@ class GameController extends Controller
         if($game->isPlayerTwo(auth()->id())) {
             $player = 2;
         }
+
+        if($player == $game->current_player) {
+            return new Response("Not your turn", 403);
+        }
+
+        if($game->subturn_id != GameSubturn::WAIT_FOR_QUESTION_ANSWER) {
+            return new Response("It's not time to answer questions", 403);
+        }
+
+        $game->subturn_id = 3;
+        $game->save();
 
         $pusher->trigger($channel, "player-$player-answers", [
             'message' => $question
